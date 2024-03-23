@@ -65,7 +65,7 @@ void POWER_MANAGEMENT_task(void * pvParameters)
     int barrel_jack_plugged_in = gpio_get_level(GPIO_NUM_12);
 
     gpio_set_direction(GPIO_NUM_10, GPIO_MODE_OUTPUT);
-    if (barrel_jack_plugged_in == 1 || !power_management->HAS_PLUG_SENSE) {
+    if (barrel_jack_plugged_in == 1 || !power_management->HAS_PLUG_SENSE || true) {
         // turn ASIC on
         gpio_set_level(GPIO_NUM_10, 0);
     } else {
@@ -175,7 +175,8 @@ void POWER_MANAGEMENT_task(void * pvParameters)
             int gpio12_state = gpio_get_level(GPIO_NUM_12);
             if (gpio12_state == 0) {
                 // turn ASIC off
-                gpio_set_level(GPIO_NUM_10, 1);
+                //gpio_set_level(GPIO_NUM_10, 1);
+                ESP_LOGE(TAG, "No 5V power (barrel jack) available - ASIC disabled");
             }
         }
 
