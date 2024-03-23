@@ -13,7 +13,7 @@
 #define I2C_MASTER_RX_BUF_DISABLE 0 /*!< I2C master doesn't need buffer */
 #define I2C_MASTER_TIMEOUT_MS 1000
 
-// static const char *TAG = "EMC2101.c";
+static const char *TAG = "EMC2101.c";
 
 /**
  * @brief Read a sequence of I2C bytes
@@ -57,6 +57,18 @@ void EMC2101_set_fan_speed(float percent)
 
     speed = (uint8_t) (63.0 * percent);
     ESP_ERROR_CHECK(register_write_byte(EMC2101_REG_FAN_SETTING, speed));
+    ESP_LOGI(TAG, "EMC2101_set_fan_speed = %02X = %d, percent = %f", speed, speed, percent);
+}
+
+// get fan speed percent
+uint8_t EMC2101_get_fan_speed_pct(void)
+{
+    uint8_t percent;
+
+    ESP_ERROR_CHECK(register_read(EMC2101_REG_FAN_SETTING, &percent, 1));
+    ESP_LOGI(TAG, "EMC2101_get_fan_speed_pct = 0x%02X = %d", percent, percent);
+
+    return percent * 100 / 63;
 }
 
 // RPM = 5400000/reading

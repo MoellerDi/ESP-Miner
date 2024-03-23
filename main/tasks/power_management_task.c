@@ -83,6 +83,8 @@ void POWER_MANAGEMENT_task(void * pvParameters)
             power_management->current = INA260_read_current();
         }
         power_management->fan_speed = EMC2101_get_fan_speed();
+        power_management->fan_speed_pct = EMC2101_get_fan_speed_pct();
+        ESP_LOGE(TAG, "fan_speed_pct: %d, EMC2101_get_fan_speed_pct: %d", power_management->fan_speed_pct, EMC2101_get_fan_speed_pct() );
 
         if (strcmp(GLOBAL_STATE->asic_model, "BM1397") == 0) {
 

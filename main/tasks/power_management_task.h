@@ -4,6 +4,7 @@
 typedef struct
 {
     uint16_t fan_speed;
+    uint8_t fan_speed_pct;
     float chip_temp;
     float voltage;
     float frequency_multiplier;

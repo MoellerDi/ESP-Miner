@@ -83,6 +83,7 @@ typedef enum
 
 void EMC2101_set_fan_speed(float);
 // void EMC2101_read(void);
+uint8_t EMC2101_get_fan_speed_pct(void);
 uint16_t EMC2101_get_fan_speed(void);
 void EMC2101_init(bool);
 float EMC2101_get_external_temp(void);
