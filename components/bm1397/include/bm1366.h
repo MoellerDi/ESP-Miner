@@ -24,8 +24,6 @@ static const uint64_t BM1366_CORE_COUNT = 894;
 // static const uint64_t NONCE_SPACE = 4294967296; // already defined in BM1397.h
 //  2^8
 static const uint64_t BM1366_ROLLING_VERSION_SPACE = 256;
-//static const double BM1366_FULLSCAN_MS = 2140;
-//static const double BM1366_FULLSCAN_MS = (double) ((double) (NONCE_SPACE * BM1366_ROLLING_VERSION_SPACE) / (double) (BM1366_FREQUENCY * BM1366_CORE_COUNT * 1000000) * 1000);
 
 typedef struct
 {
