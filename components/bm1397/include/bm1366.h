@@ -11,8 +11,11 @@
 static const uint64_t BM1366_CORE_COUNT = 672;
 // static const uint64_t BM1366_HASHRATE_S = BM1366_FREQUENCY * BM1366_CORE_COUNT * 1000000;
 //  2^32
-//  static const uint64_t NONCE_SPACE = 4294967296;
-static const double BM1366_FULLSCAN_MS = 2140;
+// static const uint64_t NONCE_SPACE = 4294967296; // already defined in BM1397.h
+//  2^8
+static const uint64_t BM1366_ROLLING_VERSION_SPACE = 256;
+//static const double BM1366_FULLSCAN_MS = 2140;
+//static const double BM1366_FULLSCAN_MS = (double) ((double) (NONCE_SPACE * BM1366_ROLLING_VERSION_SPACE) / (double) (BM1366_FREQUENCY * BM1366_CORE_COUNT * 1000000) * 1000);
 
 typedef struct
 {
@@ -40,5 +43,6 @@ int BM1366_set_max_baud(void);
 int BM1366_set_default_baud(void);
 void BM1366_send_hash_frequency(float frequency);
 task_result * BM1366_proccess_work(void * GLOBAL_STATE);
+double BM1366_get_fullscan_ms(float frequency);
 
 #endif /* BM1366_H_ */
