@@ -62,7 +62,7 @@ static task_result result;
 
 double BM1366_get_fullscan_ms(float frequency)
 {
-    double space = NONCE_SPACE * BM1366_ROLLING_VERSION_SPACE;
+    double space = BM1366_NONCE_SPACE_PER_CHIP * BM1366_ROLLING_VERSION_SPACE;
     double hashrate = frequency * BM1366_CORE_COUNT * 1000000;
 
     return (space / hashrate) * 1000;
