@@ -7,8 +7,18 @@
 
 #define CRC5_MASK 0x1F
 
+/*
+"asic_id": "BM1366",
+"asic_addr": "0x1366",
+"asic_core_num": 112,
+"asic_small_core_num": 894,
+"core_small_core_num": 8,
+"asic_domain_num": 1,
+"asic_addr_interval": 1
+*/
+
 // static const uint64_t BM1366_FREQUENCY = CONFIG_ASIC_FREQUENCY;
-static const uint64_t BM1366_CORE_COUNT = 672;
+static const uint64_t BM1366_CORE_COUNT = 894;
 // static const uint64_t BM1366_HASHRATE_S = BM1366_FREQUENCY * BM1366_CORE_COUNT * 1000000;
 //  2^32
 // static const uint64_t NONCE_SPACE = 4294967296; // already defined in BM1397.h
