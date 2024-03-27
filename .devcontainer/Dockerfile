@@ -6,6 +6,7 @@ RUN apt-get update \
   && apt install -y -q \
   cmake \
   git \
+  npm \
   hwdata \
   libglib2.0-0 \
   libnuma1 \
@@ -14,6 +15,13 @@ RUN apt-get update \
   && rm -rf /var/lib/apt/lists/*
 
 RUN update-alternatives --install /usr/local/bin/usbip usbip `ls /usr/lib/linux-tools/*/usbip | tail -n1` 20
+
+#Nodejs
+RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
+  && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list \
+  && apt update \
+  && apt purge -yf libnode-dev \
+  && apt install -y nodejs
 
 # QEMU
 ENV QEMU_REL=esp-develop-20220919
