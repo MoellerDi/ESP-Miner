@@ -638,7 +638,11 @@ void BM1366_send_work(void * pvParameters, bm_job * next_bm_job)
 
     pthread_mutex_lock(&GLOBAL_STATE->valid_jobs_lock);
     GLOBAL_STATE->valid_jobs[job.job_id] = 1;
-    // ESP_LOGI(TAG, "Added Job: %i", job.job_id);
+    
+    // uint8_t job_id = job.job_id;
+    // uint8_t tx_job_id = job_id & 0xf8;
+    // ESP_LOGI(TAG, "TX Job ID: %02X", tx_job_id);
+
     pthread_mutex_unlock(&GLOBAL_STATE->valid_jobs_lock);
 
     _send_BM1366((TYPE_JOB | GROUP_SINGLE | CMD_WRITE), &job, sizeof(BM1366_job), false);
@@ -654,6 +658,7 @@ asic_result * BM1366_receive_work(void)
         return NULL;
     } else if (received == 0) {
         // Didn't find a solution, restart and try again
+        ESP_LOGI(TAG, "Didn't find a solution (timeout)");
         return NULL;
     }
 
@@ -682,7 +687,7 @@ task_result * BM1366_proccess_work(void * pvParameters)
 
     uint8_t job_id = asic_result->job_id;
     uint8_t rx_job_id = job_id & 0xf8;
-    ESP_LOGI(TAG, "RX Job ID: %02X", rx_job_id);
+    //ESP_LOGI(TAG, "RX Job ID: %02X, Nonce: %08lx", rx_job_id, asic_result->nonce);
 
     GlobalState * GLOBAL_STATE = (GlobalState *) pvParameters;
 

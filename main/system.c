@@ -460,8 +460,30 @@ void SYSTEM_notify_found_nonce(SystemModule * module, double pool_diff, double f
 
     _update_hashrate(module, power);
 
-    // logArrayContents(historical_hashrate, HISTORY_LENGTH);
-    // logArrayContents(historical_hashrate_time_stamps, HISTORY_LENGTH);
+    //logArrayContents(historical_hashrate, HISTORY_LENGTH);
+    //logArrayContents(historical_hashrate_time_stamps, HISTORY_LENGTH);
+
+/*     ESP_LOGI(TAG, "SYSTEM_notify_found_nonce - index: %d/%d, pool_diff: %f, found_diff: %f, duration: %f, rolling_rate: %f, hashrate: %f", 
+        module->historical_hashrate_rolling_index,
+        module->historical_hashrate_init,
+        pool_diff,
+        found_diff,
+        duration,
+        rolling_rate,
+        module->current_hashrate); */
 
     _check_for_best_diff(module, found_diff, nbits);
+}
+
+void logArrayContents(const double* array, size_t length) {
+    char logMessage[1024];  // Adjust the buffer size as needed
+    int offset = 0;
+
+    offset += snprintf(logMessage + offset, sizeof(logMessage) - offset, "Array Contents: [");
+
+    for (size_t i = 0; i < length; i++) {
+        offset += snprintf(logMessage + offset, sizeof(logMessage) - offset, "%.1f%s", array[i], (i < length - 1) ? ", " : "]");
+    }
+
+    ESP_LOGI(TAG, "%s", logMessage);
 }

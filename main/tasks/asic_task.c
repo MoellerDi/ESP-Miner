@@ -43,6 +43,8 @@ void ASIC_task(void *pvParameters)
             GLOBAL_STATE->stratum_difficulty = next_bm_job->pool_diff;
         }
 
+        //ESP_LOGI(TAG, "queue_dequeue job: %s", next_bm_job->jobid);
+
         (*GLOBAL_STATE->ASIC_functions.send_work_fn)(GLOBAL_STATE, next_bm_job); // send the job to the ASIC
 
         // Time to execute the above code is ~0.3ms
