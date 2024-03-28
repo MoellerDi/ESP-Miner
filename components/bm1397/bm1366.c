@@ -442,13 +442,13 @@ static uint8_t _send_init(uint64_t frequency)
     unsigned char init2[11] = {0x55, 0xAA, 0x51, 0x09, 0x00, 0xA4, 0x90, 0x00, 0xFF, 0xFF, 0x1C};
     _send_simple(init2, 11);
 
-    // read register 00 on all chips
+    //read register 00 on all chips
     unsigned char init3[7] = {0x55, 0xAA, 0x52, 0x05, 0x00, 0x00, 0x0A};
     _send_simple(init3, 7);
 
     int chip_counter = 0;
     while (true) {
-        if(SERIAL_rx(asic_response_buffer, 11, 1000) > 0) {
+        if (SERIAL_rx(asic_response_buffer, 11, 1000) > 0) {
             chip_counter++;
         } else {
             break;
