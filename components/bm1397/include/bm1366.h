@@ -17,25 +17,19 @@
 "asic_addr_interval": 1
 */
 
-// how chip address and core count play together to distribute nonce space equally.
-// https://youtu.be/6o92HhvOc1I?t=5710
-// 2^8 distribute as per chip address (a.k.a. chip_count) -> 256 / 1 (Bitaxe has just 1 single bm1366 chip)
-// 2^8 distribute as per core address (a.k.a. core_small_core_num) -> 256 / (8*112)
-// 2^16 rolling nonce on each asic_small_core
-
-// bm1366: 8 cores, 112 asic_cores each = 896 small cores
-// fullscan_ms = (((2^8/1)*2^16)*2^16)/(575*894*1000000)*1000
-
-// static const uint64_t BM1366_FREQUENCY = CONFIG_ASIC_FREQUENCY;
+// bm1366: 8 cores, 112 asic_cores each = 896 small cores (what are the 2 additional (896 vs. 894) small cores for?)
 static const uint64_t BM1366_CHIP_COUNT = 1;
-static const uint64_t BM1366_NONCE_SPACE_PER_CHIP = (256/BM1366_CHIP_COUNT)*65536;
 static const uint64_t BM1366_CORE_COUNT = 894;
-// static const uint64_t BM1366_HASHRATE_S = BM1366_FREQUENCY * BM1366_CORE_COUNT * 1000000;
-// 2^32
-// static const uint64_t NONCE_SPACE = 4294967296; // already defined in BM1397.h
-
+// chip count and core count play together to distribute nonce space equally. see https://youtu.be/6o92HhvOc1I?t=5710
+// 2^8 to be distributed to all chips -> 256 / chip count -> 256 / 1 (Bitaxe has just 1 single bm1366 chip)
+// 2^8 distributed chip internal to all small cores (a.k.a. asic_small_core) -> 256 / asic_small_core -> 256 / 894 
+// 2^16 rolling nonce on each asic_small_core
+static const uint64_t BM1366_NONCE_SPACE_PER_CHIP = (256/BM1366_CHIP_COUNT)*65536;
 // 2^16 version rolling for each nonce on each asic_small_core
 static const uint64_t BM1366_ROLLING_VERSION_SPACE = 65536;
+// Nonce space * rooling version space
+static const uint64_t SPACE_TO_BE_CALCULATED = BM1366_NONCE_SPACE_PER_CHIP * BM1366_ROLLING_VERSION_SPACE;
+// fullscan_ms = (((2^8/1)*2^16)*2^16)/(485*894*1000000)*1000
 
 typedef struct
 {
@@ -63,6 +57,5 @@ int BM1366_set_max_baud(void);
 int BM1366_set_default_baud(void);
 void BM1366_send_hash_frequency(float frequency);
 task_result * BM1366_proccess_work(void * GLOBAL_STATE);
-double BM1366_get_fullscan_ms(float frequency);
 
 #endif /* BM1366_H_ */

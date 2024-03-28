@@ -60,14 +60,6 @@ static const char * TAG = "bm1366Module";
 static uint8_t asic_response_buffer[CHUNK_SIZE];
 static task_result result;
 
-double BM1366_get_fullscan_ms(float frequency)
-{
-    double space = BM1366_NONCE_SPACE_PER_CHIP * BM1366_ROLLING_VERSION_SPACE;
-    double hashrate = frequency * BM1366_CORE_COUNT * 1000000;
-
-    return (space / hashrate) * 1000;
-}
-
 /// @brief
 /// @param ftdi
 /// @param header
