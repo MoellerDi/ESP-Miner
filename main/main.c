@@ -36,7 +36,8 @@ void app_main(void)
                                         .set_max_baud_fn = BM1366_set_max_baud,
                                         .set_difficulty_mask_fn = BM1366_set_job_difficulty_mask,
                                         .send_work_fn = BM1366_send_work};
-        GLOBAL_STATE.asic_job_frequency_ms = BM1366_FULLSCAN_MS;
+        uint64_t bm1366_hashrate = GLOBAL_STATE.POWER_MANAGEMENT_MODULE.frequency_value * BM1366_CORE_COUNT * 1000000;
+        GLOBAL_STATE.asic_job_frequency_ms = ((double) SPACE_TO_BE_CALCULATED / (double) bm1366_hashrate) * 1000;
 
         GLOBAL_STATE.ASIC_functions = ASIC_functions;
     } else if (strcmp(GLOBAL_STATE.asic_model, "BM1368") == 0) {
