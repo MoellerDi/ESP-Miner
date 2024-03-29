@@ -5,16 +5,17 @@
 #include "freertos/task.h"
 
 #include "driver/uart.h"
+#include "driver/gpio.h"
 
 #include "esp_log.h"
-#include "soc/uart_struct.h"
 
-#include "bm1397.h"
 #include "serial.h"
 #include "utils.h"
 
-#define ECHO_TEST_TXD (17)
-#define ECHO_TEST_RXD (18)
+#define TXD_PIN (GPIO_NUM_17)
+#define RXD_PIN (GPIO_NUM_18)
+#define RTS_PIN (UART_PIN_NO_CHANGE)
+#define CTS_PIN (UART_PIN_NO_CHANGE)
 #define BUF_SIZE (1024)
 
 static const char *TAG = "serial";
@@ -34,7 +35,7 @@ void SERIAL_init(void)
     // Configure UART1 parameters
     uart_param_config(UART_NUM_1, &uart_config);
     // Set UART1 pins(TX: IO17, RX: I018)
-    uart_set_pin(UART_NUM_1, ECHO_TEST_TXD, ECHO_TEST_RXD, UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE);
+    uart_set_pin(UART_NUM_1, TXD_PIN, RXD_PIN, RTS_PIN, CTS_PIN);
 
     // Install UART driver (we don't need an event queue here)
     // tx buffer 0 so the tx time doesn't overlap with the job wait time
