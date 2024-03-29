@@ -340,7 +340,7 @@ static esp_err_t GET_system_info(httpd_req_t * req)
     char * stratumUser = nvs_config_get_string(NVS_CONFIG_STRATUM_USER, CONFIG_STRATUM_USER);
     char * board_version = nvs_config_get_string(NVS_CONFIG_BOARD_VERSION, 'unknown');
 
-        cJSON * root = cJSON_CreateObject();
+    cJSON * root = cJSON_CreateObject();
     cJSON_AddNumberToObject(root, "power", GLOBAL_STATE->POWER_MANAGEMENT_MODULE.power);
     cJSON_AddNumberToObject(root, "voltage", GLOBAL_STATE->POWER_MANAGEMENT_MODULE.voltage);
     cJSON_AddNumberToObject(root, "current", GLOBAL_STATE->POWER_MANAGEMENT_MODULE.current);
@@ -348,6 +348,8 @@ static esp_err_t GET_system_info(httpd_req_t * req)
     cJSON_AddNumberToObject(root, "temp", GLOBAL_STATE->POWER_MANAGEMENT_MODULE.chip_temp);
     cJSON_AddNumberToObject(root, "hashRate", GLOBAL_STATE->SYSTEM_MODULE.current_hashrate);
     cJSON_AddStringToObject(root, "bestDiff", GLOBAL_STATE->SYSTEM_MODULE.best_diff_string);
+    cJSON_AddNumberToObject(root, "bestNonceDifficulty", GLOBAL_STATE->SYSTEM_MODULE.best_nonce_diff);
+    cJSON_AddNumberToObject(root, "stratumDifficulty", GLOBAL_STATE->stratum_difficulty);
 
     cJSON_AddNumberToObject(root, "freeHeap", esp_get_free_heap_size());
     cJSON_AddNumberToObject(root, "coreVoltage", nvs_config_get_u16(NVS_CONFIG_ASIC_VOLTAGE, CONFIG_ASIC_VOLTAGE));
@@ -379,7 +381,7 @@ static esp_err_t GET_system_info(httpd_req_t * req)
     free(stratumUser);
     free(board_version);
 
-        const char * sys_info = cJSON_Print(root);
+    const char * sys_info = cJSON_Print(root);
     httpd_resp_sendstr(req, sys_info);
     free(sys_info);
     cJSON_Delete(root);
