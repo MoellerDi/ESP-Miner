@@ -39,9 +39,14 @@ void ASIC_result_task(void *pvParameters)
             asic_result->nonce,
             asic_result->rolled_version);
 
-        ESP_LOGI(TAG, "Nonce difficulty %.2f of %ld.", nonce_diff, GLOBAL_STATE->ASIC_TASK_MODULE.active_jobs[job_id]->pool_diff);
+        ESP_LOGI(TAG, "Job ID: %02x, Nonce: %08lx, Rolled_version: %08lx, difficulty: %.2f of %ld.", 
+                    asic_result->job_id,
+                    asic_result->nonce,
+                    asic_result->rolled_version ^ GLOBAL_STATE->ASIC_TASK_MODULE.active_jobs[job_id]->version,
+                    nonce_diff,
+                    GLOBAL_STATE->stratum_difficulty);
 
-        if (nonce_diff > GLOBAL_STATE->ASIC_TASK_MODULE.active_jobs[job_id]->pool_diff)
+        if (nonce_diff > GLOBAL_STATE->stratum_difficulty)
         {
 
             STRATUM_V1_submit_share(

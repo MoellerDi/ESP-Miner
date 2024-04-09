@@ -33,14 +33,17 @@ void ASIC_task(void *pvParameters)
     ESP_LOGI(TAG, "ASIC Ready!");
     while (1)
     {
-
         bm_job *next_bm_job = (bm_job *)queue_dequeue(&GLOBAL_STATE->ASIC_jobs_queue);
+        //ESP_LOGI(TAG, "New ASIC Job Dequeued %s (queue %d/%d)", next_bm_job->jobid, GLOBAL_STATE->ASIC_jobs_queue.count, QUEUE_SIZE);
 
-        if (next_bm_job->pool_diff != GLOBAL_STATE->stratum_difficulty)
+        if (next_bm_job->pool_diff != GLOBAL_STATE->stratum_difficulty) // check if we got new difficulty while job was waiting in the queue
         {
             // ESP_LOGI(TAG, "New difficulty %d", next_bm_job->pool_diff);
-            (*GLOBAL_STATE->ASIC_functions.set_difficulty_mask_fn)(next_bm_job->pool_diff);
-            GLOBAL_STATE->stratum_difficulty = next_bm_job->pool_diff;
+            //(*GLOBAL_STATE->ASIC_functions.set_difficulty_mask_fn)(next_bm_job->pool_diff);
+            //GLOBAL_STATE->stratum_difficulty = next_bm_job->pool_diff;
+
+            //(*GLOBAL_STATE->ASIC_functions.set_difficulty_mask_fn)(GLOBAL_STATE->stratum_difficulty);
+            next_bm_job->pool_diff = GLOBAL_STATE->stratum_difficulty;
         }
 
         (*GLOBAL_STATE->ASIC_functions.send_work_fn)(GLOBAL_STATE, next_bm_job); // send the job to the ASIC
