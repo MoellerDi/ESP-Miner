@@ -175,7 +175,7 @@ void POWER_MANAGEMENT_task(void * pvParameters)
         }
         // ESP_LOGI(TAG, "target %f, Freq %f, Volt %f, Power %f", target_frequency, power_management->frequency_value,
         // power_management->voltage, power_management->power);
-
+/*
         // Read the state of GPIO12
         if (power_management->HAS_PLUG_SENSE) {
             int gpio12_state = gpio_get_level(GPIO_NUM_12);
@@ -185,6 +185,7 @@ void POWER_MANAGEMENT_task(void * pvParameters)
                 ESP_LOGE(TAG, "No 5V power (barrel jack) available - ASIC disabled");
             }
         }
+*/
 
         vTaskDelay(POLL_RATE / portTICK_PERIOD_MS);
     }
