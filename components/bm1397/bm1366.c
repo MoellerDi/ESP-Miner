@@ -587,11 +587,8 @@ int BM1366_set_max_baud(void)
 
 void BM1366_set_job_difficulty_mask(int difficulty)
 {
-    if (difficulty < 256) {
+    if (difficulty < 16) {
         return;
-    }
-    else if (difficulty >= 512) {
-        difficulty = difficulty / 2;
     }
 
     // Default mask of 256 diff

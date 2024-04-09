@@ -18,10 +18,10 @@ void create_jobs_task(void *pvParameters)
     while (1)
     {
         mining_notify *mining_notification = (mining_notify *)queue_dequeue(&GLOBAL_STATE->stratum_queue);
-        ESP_LOGI(TAG, "New Work Dequeued %s", mining_notification->job_id);
+        ESP_LOGI(TAG, "New Work Dequeued %s (queue %d/%d)", mining_notification->job_id, GLOBAL_STATE->stratum_queue.count, QUEUE_SIZE);
 
         uint32_t extranonce_2 = 0;
-        while (GLOBAL_STATE->stratum_queue.count < 1 && extranonce_2 < UINT_MAX && GLOBAL_STATE->abandon_work == 0)
+        while (extranonce_2 < 256 && GLOBAL_STATE->abandon_work == 0)
         {
             char *extranonce_2_str = extranonce_2_generate(extranonce_2, GLOBAL_STATE->extranonce_2_len);
 
@@ -37,6 +37,7 @@ void create_jobs_task(void *pvParameters)
             queued_next_job->version_mask = GLOBAL_STATE->version_mask;
 
             queue_enqueue(&GLOBAL_STATE->ASIC_jobs_queue, queued_next_job);
+            //ESP_LOGI(TAG, "New ASIC Job Enqueued %s (queue %d/%d)", queued_next_job->jobid, GLOBAL_STATE->ASIC_jobs_queue.count, QUEUE_SIZE);
 
             free(coinbase_tx);
             free(merkle_root);
