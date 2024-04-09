@@ -101,3 +101,10 @@ uint8_t EMC2101_get_internal_temp(void)
     ESP_ERROR_CHECK(register_read(EMC2101_INTERNAL_TEMP, &temp, 1));
     return temp;
 }
+
+uint8_t EMC2101_get_partid(void)
+{
+    uint8_t partid;
+    ESP_ERROR_CHECK(register_read(EMC2101_REG_PARTID, &partid, 1));
+    return partid;
+}

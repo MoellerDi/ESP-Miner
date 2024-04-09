@@ -81,6 +81,7 @@ void POWER_MANAGEMENT_task(void * pvParameters)
         //ESP_LOGE(TAG, "%s: asic_job_frequency_ms: %f", GLOBAL_STATE->asic_model, GLOBAL_STATE->asic_job_frequency_ms);
         //ESP_LOGE(TAG, "ASIC_jobs_queue.count: %d", GLOBAL_STATE->ASIC_jobs_queue.count);
         //ESP_LOGE(TAG, "stratum_queue.count: %d", GLOBAL_STATE->stratum_queue.count);
+        //ESP_LOGI(TAG, "EMC2101 PRODUCT ID = 0x%02X", EMC2101_get_partid());
 
         if (read_power == true) {
             power_management->voltage = INA260_read_voltage();

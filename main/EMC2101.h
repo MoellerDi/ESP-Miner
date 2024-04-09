@@ -87,4 +87,5 @@ uint16_t EMC2101_get_fan_speed(void);
 void EMC2101_init(bool);
 float EMC2101_get_external_temp(void);
 uint8_t EMC2101_get_internal_temp(void);
+uint8_t EMC2101_get_partid(void);
 #endif /* EMC2101_H_ */
