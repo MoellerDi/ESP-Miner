@@ -8,6 +8,8 @@
 
 #include <sys/time.h>
 
+#include "esp_random.h"
+
 static const char *TAG = "create_jobs_task";
 
 void create_jobs_task(void *pvParameters)
@@ -20,8 +22,9 @@ void create_jobs_task(void *pvParameters)
         mining_notify *mining_notification = (mining_notify *)queue_dequeue(&GLOBAL_STATE->stratum_queue);
         ESP_LOGI(TAG, "New Work Dequeued %s (queue %d/%d)", mining_notification->job_id, GLOBAL_STATE->stratum_queue.count, QUEUE_SIZE);
 
-        uint32_t extranonce_2 = 0;
-        while (extranonce_2 < 256 && GLOBAL_STATE->abandon_work == 0)
+        uint32_t extranonce_2 = esp_random();
+        ESP_LOGI(TAG, "Generate random extranonce_2 %08lx", extranonce_2);
+        while (GLOBAL_STATE->stratum_queue.count < 1 && extranonce_2 < UINT_MAX && GLOBAL_STATE->abandon_work == 0)
         {
             char *extranonce_2_str = extranonce_2_generate(extranonce_2, GLOBAL_STATE->extranonce_2_len);
 
