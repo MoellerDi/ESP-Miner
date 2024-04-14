@@ -40,8 +40,10 @@
                                     <i class="pi pi-send text-blue-500 text-xl"></i>
                                 </div>
                             </div>
-                            <span class="text-red-500 font-medium">{{info.sharesRejected}} </span>
-                            <span class="text-500">rejected</span>
+                            <ng-container *ngIf="sharesRejectedPct$ | async as sharesRejectedPct">
+                                <span class="text-red-500 font-medium">{{sharesRejectedPct | number: '1.2-2'}}% </span>
+                                <span class="text-500">rejected</span>
+                            </ng-container>
                         </div>
                     </div>
                     <div class="col-12 lg:col-6 xl:col-3">
