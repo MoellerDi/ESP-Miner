@@ -17,7 +17,7 @@ export class HomeComponent {
 
   public quickLink$: Observable<string | undefined>;
   public expectedHashRate$: Observable<number | undefined>;
-
+  public sharesRejectedPct$: Observable<number | undefined>;
 
   public chartOptions: any;
   public dataLabel: number[] = [];
@@ -156,6 +156,16 @@ export class HomeComponent {
           return `https://web.public-pool.io/#/app/${address}`;
         } else {
           return undefined;
+        }
+      })
+    )
+
+    this.sharesRejectedPct$ = this.info$.pipe(
+      map(info => {
+        if (info.sharesAccepted > 0 && info.sharesRejected > 0) {
+          return (100 / info.sharesAccepted) * info.sharesRejected
+        } else {
+          return 0.001
         }
       })
     )
