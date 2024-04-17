@@ -108,49 +108,109 @@ TEST_CASE("Check known working", "[bm1366]")
 
     SERIAL_set_baud((*GLOBAL_STATE.ASIC_functions.set_max_baud_fn)());
 
-    // uint8_t prev_block_hash[32];
-    // hex2bin("00000000000000000000a5f36b312cdf97effc86a0a7b00384bc13a49dd1f07a", prev_block_hash, 32);
-    // reverse_bytes(prev_block_hash, 32);
-    // char * prev_block_hash_char = malloc(65);
-    // bin2hex(prev_block_hash, 32, prev_block_hash_char, 65);
-    // ESP_LOGI(TAG, "prev_block_hash %s", prev_block_hash_char);
+
+/*
+{"id":null,"method":"mining.notify","params":[
+    "15937dc", //job_id
+    "63461e09e27c1454ba1df8fdcd5f5f201f5ade7e0001cde80000000000000000", //prev_block_hash
+    "02000000010000000000000000000000000000000000000000000000000000000000000000ffffffff1703f2cf0c5075626c69632d506f6f6c", //coinbase_1
+    "ffffffff0283b14b2d00000000160014979f36b9a92622b82767820f6477bdefc03e86b70000000000000000266a24aa21a9ed43a609abf1b0ae9fb2a92451770c95ad623de1e7801af2f35a998d7fe6cc82ab00000000", //coinbase_2
+    [
+        "021d20e06085ef4970139c4c3e32336edbc113abcf78b32800c792c80e1fdb6b",
+        "f02fcbea9a3408c93385dabd064c3f971355b83ee614a1ffdc843327f8c5abc3",
+        "669aacb989a9b0e601a680364c3655b97efd5afb6886f054456e86f13bb5e4cb",
+        "99573b894dc4ac6a17d8d8ec3d059dc400ddc3433cfdace2db1d12c8365f1503",
+        "6ea792c5f736ac1b3a40b5662791bf6fda42e44693d13bc7f88fc7db649e6184",
+        "0364d05a228ff502680fd875246dbf7763b2fd4591dcd2dea4c541f2f2be9a38",
+        "2a8998a2178d3761d107b8ac3c04af7c996f6be8be4cd17c245a0a41d47f1cd6",
+        "73c2df2610c36fd1249622c0d93d67c7b5027cd013089e0320664ac706175d07",
+        "f960c56ac0f7ccefab021c945f444c7648bf1a277ab5b8f1fab524a03cc03f54",
+        "1b993d3325bef7e320060c529d60d0c42b07e87f5fcb5bab84c45146239e4d75",
+        "139467baf2e565b976528b5102c54faa10d4b9560005afdd7df0def1ce00edc1",
+        "c89bd65989a888f1c3f03d189e26892bf62c84e1e6f620294199f5178c53583e",
+        "37883d69fbc3f396aacc76287d39e9d70a0859948d17dd9170a8da5aba636178"
+    ],
+    "20000000", //version
+    "17034219", //target
+    "66200c3f", //ntime
+    false] //clear_jobs
+    }
+*/
+
+
+    uint8_t prev_block_hash[32];
+    hex2bin("00000000000000000001cde81f5ade7ecd5f5f20ba1df8fde27c145463461e09", prev_block_hash, 32);
+    reverse_bytes(prev_block_hash, 32);
+    uint8_t buff;
+    size_t boffset, bword, bsize;
+    if (1) {
+        // reverse prev hash (4-byte word swap)
+        boffset = 0;
+        bword = 4;
+        bsize = 32;
+        for (size_t i = 1; i <= bsize / bword; i++) {
+            for (size_t j = boffset; j < boffset + bword / 2; j++) {
+                buff = prev_block_hash[j];
+                prev_block_hash[j] = prev_block_hash[2 * boffset + bword - 1 - j];
+                prev_block_hash[2 * boffset + bword - 1 - j] = buff;
+            }
+            boffset += bword;
+        }
+    }
+    
+    char * prev_block_hash_rev = malloc(65);
+    memset(prev_block_hash_rev, '0', 64);
+    bin2hex(prev_block_hash, 32, prev_block_hash_rev, 65);
+    ESP_LOGI(TAG, "prev_block_hash_rev %s", prev_block_hash_rev);
+    ESP_LOG_BUFFER_HEX(TAG,  prev_block_hash, 32);
 
     mining_notify notify_message;
-    notify_message.job_id = 0;
-    //notify_message.prev_block_hash   = "0c859545a3498373a57452fac22eb7113df2a465000543520000000000000000";
-    notify_message.prev_block_hash   = "00000000000000000000a5f36b312cdf97effc86a0a7b00384bc13a49dd1f07a";
-    //notify_message.prev_block_hash   = prev_block_hash_char;
-    notify_message.version = 552255488; //0x20eac000; // 0x20000004;
-    notify_message.target = 0x17034219; //0x1705ae3a;
-    notify_message.ntime = 1713299970; //0x647025b5;
-    notify_message.difficulty = 128;
+    notify_message.job_id = 0; //Block #839665
+    notify_message.prev_block_hash   = prev_block_hash_rev;
+    notify_message.version = 0x23e0a000; //0x20eac000; // 0x20000004;
+    notify_message.target = 17034219; //0x17034219; //0x1705ae3a;
+    notify_message.ntime = 1713375868; //0x647025b5;
+    notify_message.difficulty = 128000;
     notify_message.version_mask = 0x1fffe000;
 
-    //reverse_bytes(notify_message.version, 4);
-    //reverse_bytes(notify_message.target, 4);
-    //reverse_bytes(notify_message.ntime, 4);
+    uint8_t merkle_root[32];
+    hex2bin("067777cef3b24b4238d44ba0f1619f49a0af64d7aefa7d5a7b0e82092babcc15", merkle_root, 32);
+    reverse_bytes(merkle_root, 32);
+    if (0) {
+        // reverse (4-byte word swap)
+        boffset = 0;
+        bword = 4;
+        bsize = 32;
+        for (size_t i = 1; i <= bsize / bword; i++) {
+            for (size_t j = boffset; j < boffset + bword / 2; j++) {
+                buff = merkle_root[j];
+                merkle_root[j] = merkle_root[2 * boffset + bword - 1 - j];
+                merkle_root[2 * boffset + bword - 1 - j] = buff;
+            }
+            boffset += bword;
+        }
+    }
+    
+    char * merkle_root_rev = malloc(65);
+    memset(merkle_root_rev, '0', 64);
+    bin2hex(merkle_root, 32, merkle_root_rev, 65);
+    ESP_LOGI(TAG, "merkle_root_rev %s", merkle_root_rev);
+    ESP_LOG_BUFFER_HEX(TAG,  merkle_root, 32);
 
+    bm_job job = construct_bm_job(&notify_message, merkle_root_rev, notify_message.version_mask);
 
-    //TEST_ASSERT_EQUAL_STRING("7af0d19da413bc8403b0a7a086fcef97df2c316bf3a500000000000000000000", notify_message.prev_block_hash);
-
-    //char * merkle_root = calculate_merkle_root_hash(coinbase_tx, merkles, num_merkles);
-
-    char * merkle_root = "b5fc93c5ca3cb9dcb2878d485b650ea5a62aa17233d2f44efc56fd92d5e06e64";
-    // uint8_t merkle_root[32];
-    // hex2bin("b5fc93c5ca3cb9dcb2878d485b650ea5a62aa17233d2f44efc56fd92d5e06e64", merkle_root, 32);
-    // reverse_bytes(merkle_root, 32);
-    // char * merkle_root_rev = malloc(65);
-    // bin2hex(merkle_root, 32, merkle_root_rev, 65);
-    // ESP_LOGI(TAG, "merkle_root_rev %s", merkle_root_rev);
-
-    bm_job job = construct_bm_job(&notify_message, merkle_root, notify_message.version_mask);
-
-    //TEST_ASSERT_EQUAL_STRING("00000000000000000000a5f36b312cdf97effc86a0a7b00384bc13a49dd1f07a", job.prev_block_hash);
+    ESP_LOGI(TAG, "job.prev_block_hash:");
+    ESP_LOG_BUFFER_HEX(TAG,  job.prev_block_hash, 32);
+    ESP_LOGI(TAG, "job.prev_block_hash_be:");
+    ESP_LOG_BUFFER_HEX(TAG,  job.prev_block_hash_be, 32);
+    ESP_LOGI(TAG, "job.merkle_root:");
+    ESP_LOG_BUFFER_HEX(TAG,  job.merkle_root, 32);
+    ESP_LOGI(TAG, "job.merkle_root_be:");
+    ESP_LOG_BUFFER_HEX(TAG,  job.merkle_root_be, 32);
 
     (*GLOBAL_STATE.ASIC_functions.set_difficulty_mask_fn)(notify_message.difficulty);
 
     ESP_LOGI(TAG, "Sending work");
-    //BM1366_send_work(GLOBAL_STATE, &job);
     (*GLOBAL_STATE.ASIC_functions.send_work_fn)(&GLOBAL_STATE, &job);
 
     ESP_LOGI(TAG, "Receiving work");
@@ -163,9 +223,10 @@ TEST_CASE("Check known working", "[bm1366]")
         // check the nonce difficulty
         double nonce_diff = test_nonce_value(&job, asic_result->nonce, asic_result->rolled_version);
         ESP_LOGI(TAG, "Nonce %lu Nonce difficulty %.32f.", asic_result->nonce, nonce_diff);
+        TEST_ASSERT_EQUAL_UINT32(1281214545, asic_result->nonce);
     }
 
-
+    
 
     // memory
     free(GLOBAL_STATE.ASIC_TASK_MODULE.active_jobs);
