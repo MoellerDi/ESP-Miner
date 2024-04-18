@@ -109,7 +109,8 @@ TEST_CASE("Check known working", "[bm1366]")
     SERIAL_set_baud((*GLOBAL_STATE.ASIC_functions.set_max_baud_fn)());
 
 
-/*
+/* 
+//Block #839666
 {"id":null,"method":"mining.notify","params":[
     "15937dc", //job_id
     "63461e09e27c1454ba1df8fdcd5f5f201f5ade7e0001cde80000000000000000", //prev_block_hash
@@ -137,9 +138,9 @@ TEST_CASE("Check known working", "[bm1366]")
     }
 */
 
-    bool rev_prev_block_hash    = 1;
+    bool rev_prev_block_hash    = 0;
     bool rev_prev_block_hask_2  = 1;
-    bool rev_merkle_root_hash   = 1;
+    bool rev_merkle_root_hash   = 0;
     bool rev_merkle_root_hash_2 = 0;
 
     uint8_t buff;
@@ -167,15 +168,14 @@ TEST_CASE("Check known working", "[bm1366]")
     memset(prev_block_hash_rev, '0', 64);
     bin2hex(prev_block_hash, 32, prev_block_hash_rev, 65);
     ESP_LOGI(TAG, "prev_block_hash_rev %s", prev_block_hash_rev);
-    ESP_LOG_BUFFER_HEX(TAG,  prev_block_hash, 32);
 
     mining_notify notify_message;
     notify_message.job_id = 0; //Block #839666
     notify_message.prev_block_hash   = prev_block_hash_rev;
-    notify_message.version = 0x20106000; //0x20106000;
-    notify_message.target = 0x17034219; //0x1705ae3a;
+    notify_message.version = 0x20000000; //0x20106000;
+    notify_message.target = 0x17034219;
     notify_message.ntime = 1713376819; //0x647025b5;
-    notify_message.difficulty = 320000;
+    notify_message.difficulty = 32800;
     notify_message.version_mask = 0x1fffe000;
 
     uint8_t merkle_root[32];
@@ -200,10 +200,8 @@ TEST_CASE("Check known working", "[bm1366]")
     memset(merkle_root_rev, '0', 64);
     bin2hex(merkle_root, 32, merkle_root_rev, 65);
     ESP_LOGI(TAG, "merkle_root_rev %s", merkle_root_rev);
-    ESP_LOG_BUFFER_HEX(TAG,  merkle_root, 32);
 
     bm_job job = construct_bm_job(&notify_message, merkle_root_rev, 0);
-    job.version_mask = notify_message.version_mask;
 
     ESP_LOGI(TAG, "job.prev_block_hash:");
     ESP_LOG_BUFFER_HEX(TAG,  job.prev_block_hash, 32);
@@ -242,3 +240,4 @@ TEST_CASE("Check known working", "[bm1366]")
     gpio_set_direction(GPIO_NUM_10, GPIO_MODE_OUTPUT);
     gpio_set_level(GPIO_NUM_10, 1);
 }
+
