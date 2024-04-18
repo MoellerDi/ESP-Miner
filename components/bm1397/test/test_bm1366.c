@@ -140,7 +140,7 @@ TEST_CASE("Check known working", "[bm1366]")
 
     bool rev_prev_block_hash    = 0;
     bool rev_prev_block_hask_2  = 1;
-    bool rev_merkle_root_hash   = 0;
+    bool rev_merkle_root_hash   = 1;
     bool rev_merkle_root_hash_2 = 0;
 
     uint8_t buff;
