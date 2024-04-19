@@ -2,14 +2,14 @@ import hashlib
 from binascii import unhexlify, hexlify
 
 """
-Genesis block data from https://blockchain.info/rawblock/000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f
+Block data from https://blockchain.info/rawblock/000000000000000000023dfafae2b6e6b5ecf9d1365fafa075dec49625721f37
 """
-btc_version = 537944064
-hex_prev_hash = "00000000000000000001cde81f5ade7ecd5f5f20ba1df8fde27c145463461e09"
-hex_merkle_hash = "2836bac5721062dfec270ebf9b554d002612ab6c1a0c05bd43d471892496c205"
-epoch_time = 1713376819
-bits = 0x17034219
-nonce = 1720357422
+btc_version = 714498048
+hex_prev_hash = "000000000000000000015d7eee767c24abd355f70fb382d2ef47398610439ba3"
+hex_merkle_hash = "088083f58ddef995494fec492880da49e3463cc73dee1306dbdf6cf3af77454c"
+epoch_time = 1713511391
+bits = 386089497
+nonce = 3529540887
 
 def endian_big_to_little(hex):
     padded_hex = ''

@@ -18,18 +18,18 @@
 
 static GlobalState GLOBAL_STATE = {.extranonce_str = NULL, .extranonce_2_len = 0, .abandon_work = 0, .version_mask = 0};
 
-static const char * TAG = "unit_test";
+static const char * TAG = "test_bm1366";
 
-TEST_CASE("Check known working", "[bm1366]")
+TEST_CASE("Check known working block", "[bm1366]")
 {
     ESP_ERROR_CHECK(nvs_flash_init());
 
-    GLOBAL_STATE.POWER_MANAGEMENT_MODULE.frequency_value = 525; //nvs_config_get_u16(NVS_CONFIG_ASIC_FREQ, 550);
-    ESP_LOGI(TAG, "NVS_CONFIG_ASIC_FREQ %f", GLOBAL_STATE.POWER_MANAGEMENT_MODULE.frequency_value);
-    //TEST_ASSERT_EQUAL_INT16(550, GLOBAL_STATE.POWER_MANAGEMENT_MODULE.frequency_value);
+    GLOBAL_STATE.POWER_MANAGEMENT_MODULE.frequency_value = 485; //nvs_config_get_u16(NVS_CONFIG_ASIC_FREQ, 485);
+    //ESP_LOGI(TAG, "NVS_CONFIG_ASIC_FREQ %f", GLOBAL_STATE.POWER_MANAGEMENT_MODULE.frequency_value);
+    TEST_ASSERT_LESS_OR_EQUAL_UINT(575, GLOBAL_STATE.POWER_MANAGEMENT_MODULE.frequency_value);
 
     GLOBAL_STATE.asic_model = nvs_config_get_string(NVS_CONFIG_ASIC_MODEL, "");
-    ESP_LOGI(TAG, "ASIC: %s", GLOBAL_STATE.asic_model);
+    //ESP_LOGI(TAG, "ASIC: %s", GLOBAL_STATE.asic_model);
     TEST_ASSERT_EQUAL_STRING("BM1366", GLOBAL_STATE.asic_model);
 
     if (strcmp(GLOBAL_STATE.asic_model, "BM1366") == 0) {
@@ -39,10 +39,8 @@ TEST_CASE("Check known working", "[bm1366]")
                                         .set_max_baud_fn = BM1366_set_max_baud,
                                         .set_difficulty_mask_fn = BM1366_set_job_difficulty_mask,
                                         .send_work_fn = BM1366_send_work};
-        uint64_t bm1366_hashrate = GLOBAL_STATE.POWER_MANAGEMENT_MODULE.frequency_value * BM1366_CORE_COUNT * 1000000;
-        GLOBAL_STATE.asic_job_frequency_ms = ((double) SPACE_TO_BE_CALCULATED / (double) bm1366_hashrate) * 1000;
-
         GLOBAL_STATE.ASIC_functions = ASIC_functions;
+
     } else if (strcmp(GLOBAL_STATE.asic_model, "BM1368") == 0) {
         ESP_LOGI(TAG, "ASIC: BM1368");
         AsicFunctions ASIC_functions = {.init_fn = BM1368_init,
@@ -50,11 +48,8 @@ TEST_CASE("Check known working", "[bm1366]")
                                         .set_max_baud_fn = BM1368_set_max_baud,
                                         .set_difficulty_mask_fn = BM1368_set_job_difficulty_mask,
                                         .send_work_fn = BM1368_send_work};
-
-        uint64_t bm1368_hashrate = GLOBAL_STATE.POWER_MANAGEMENT_MODULE.frequency_value * BM1368_CORE_COUNT * 1000000;
-        GLOBAL_STATE.asic_job_frequency_ms = ((double) NONCE_SPACE / (double) bm1368_hashrate) * 1000;
-
         GLOBAL_STATE.ASIC_functions = ASIC_functions;
+
     } else if (strcmp(GLOBAL_STATE.asic_model, "BM1397") == 0) {
         ESP_LOGI(TAG, "ASIC: BM1397");
         AsicFunctions ASIC_functions = {.init_fn = BM1397_init,
@@ -62,11 +57,8 @@ TEST_CASE("Check known working", "[bm1366]")
                                         .set_max_baud_fn = BM1397_set_max_baud,
                                         .set_difficulty_mask_fn = BM1397_set_job_difficulty_mask,
                                         .send_work_fn = BM1397_send_work};
-
-        uint64_t bm1397_hashrate = GLOBAL_STATE.POWER_MANAGEMENT_MODULE.frequency_value * BM1397_CORE_COUNT * 1000000;
-        GLOBAL_STATE.asic_job_frequency_ms = ((double) NONCE_SPACE / (double) bm1397_hashrate) * 1000;
-
         GLOBAL_STATE.ASIC_functions = ASIC_functions;
+
     } else {
         ESP_LOGI(TAG, "Invalid ASIC model");
         AsicFunctions ASIC_functions = {.init_fn = NULL,
@@ -79,7 +71,6 @@ TEST_CASE("Check known working", "[bm1366]")
 
     GLOBAL_STATE.ASIC_TASK_MODULE.active_jobs = malloc(sizeof(bm_job *) * 128);
     GLOBAL_STATE.valid_jobs = malloc(sizeof(uint8_t) * 128);
-
     for (int i = 0; i < 128; i++) {
 
         GLOBAL_STATE.ASIC_TASK_MODULE.active_jobs[i] = NULL;
@@ -90,10 +81,11 @@ TEST_CASE("Check known working", "[bm1366]")
     ESP_ERROR_CHECK(i2c_master_init());
     ESP_LOGI(TAG, "I2C initialized successfully");
 
+    // init ADC and set DS4432U voltage
     ADC_init();
     DS4432U_set_vcore(1.200000); //nvs_config_get_u16(NVS_CONFIG_ASIC_VOLTAGE, 1200) / 1000.0);
-    ESP_LOGI(TAG, "DS4432U_set_vcore %f", nvs_config_get_u16(NVS_CONFIG_ASIC_VOLTAGE, 1200) / 1000.0);
 
+    // init EMC2101 and set FAN speed to 100%
     EMC2101_init(nvs_config_get_u16(NVS_CONFIG_INVERT_FAN_POLARITY, 1));
     EMC2101_set_fan_speed(1);
 
@@ -101,13 +93,18 @@ TEST_CASE("Check known working", "[bm1366]")
     gpio_set_direction(GPIO_NUM_10, GPIO_MODE_OUTPUT);
     gpio_set_level(GPIO_NUM_10, 0);
 
+    // init serial communication
     SERIAL_init();
 
     uint8_t chips_detected = (*GLOBAL_STATE.ASIC_functions.init_fn)(GLOBAL_STATE.POWER_MANAGEMENT_MODULE.frequency_value);
-    TEST_ASSERT_EQUAL_INT8(1, chips_detected);
     ESP_LOGI(TAG, "%u chips detected", chips_detected);
+    TEST_ASSERT_EQUAL_INT8(1, chips_detected); // to be adapted to the number of chips expected
 
+    // set max baud rate
     SERIAL_set_baud((*GLOBAL_STATE.ASIC_functions.set_max_baud_fn)());
+
+    ESP_LOGI(TAG, "%s is ready and waiting for work", GLOBAL_STATE.asic_model);
+
 
 
 /* Block #839900
@@ -136,72 +133,24 @@ TEST_CASE("Check known working", "[bm1366]")
         false] //clear_jobs
     }
 */
-
-    bool rev_prev_block_hash          = 1;
-    bool swap_endian_prev_block_hask  = 1;
-    bool rev_merkle_root_hash         = 1;
-    bool swap_endian_merkle_root_hash = 0;
-
-    uint8_t buff;
-    size_t boffset, bword, bsize;
-
-    uint8_t prev_block_hash[32];
-    hex2bin("000000000000000000015d7eee767c24abd355f70fb382d2ef47398610439ba3", prev_block_hash, 32);
-    if (rev_prev_block_hash) {reverse_bytes(prev_block_hash, 32);}
-    if (swap_endian_prev_block_hask) {
-        // reverse (4-byte word swap)
-        boffset = 0;
-        bword = 4;
-        bsize = 32;
-        for (size_t i = 1; i <= bsize / bword; i++) {
-            for (size_t j = boffset; j < boffset + bword / 2; j++) {
-                buff = prev_block_hash[j];
-                prev_block_hash[j] = prev_block_hash[2 * boffset + bword - 1 - j];
-                prev_block_hash[2 * boffset + bword - 1 - j] = buff;
-            }
-            boffset += bword;
-        }
-    }
-    
-    char * prev_block_hash_rev = malloc(65);
-    memset(prev_block_hash_rev, '0', 64);
-    bin2hex(prev_block_hash, 32, prev_block_hash_rev, 64);
-    ESP_LOGI(TAG, "prev_block_hash_rev %s", prev_block_hash_rev);
-
+    ESP_LOGI(TAG, "Preparing job");
     mining_notify notify_message;
-    notify_message.job_id = 0; //Block #839900
-    notify_message.prev_block_hash   = prev_block_hash_rev;
-    notify_message.version = 0x20000000; //0x20106000;
+    notify_message.job_id = 839900; //Block #839900 - see above https://blockchain.info/rawblock/000000000000000000023dfafae2b6e6b5ecf9d1365fafa075dec49625721f37 or https://bitcoinexplorer.org/block-height/839900#JSON
+    notify_message.prev_block_hash = "10439ba3ef4739860fb382d2abd355f7ee767c2400015d7e0000000000000000";
+    notify_message.version = 0x20000000;
     notify_message.target = 0x17034219;
-    notify_message.ntime = 1713511391;
-    notify_message.difficulty = 128;
-    notify_message.version_mask = 0x1fffe000;
-
-    uint8_t merkle_root[32];
-    hex2bin("088083f58ddef995494fec492880da49e3463cc73dee1306dbdf6cf3af77454c", merkle_root, 32);
-    if (rev_merkle_root_hash) {reverse_bytes(merkle_root, 32);}
-    if (swap_endian_merkle_root_hash) {
-        // reverse (4-byte word swap)
-        boffset = 0;
-        bword = 4;
-        bsize = 32;
-        for (size_t i = 1; i <= bsize / bword; i++) {
-            for (size_t j = boffset; j < boffset + bword / 2; j++) {
-                buff = merkle_root[j];
-                merkle_root[j] = merkle_root[2 * boffset + bword - 1 - j];
-                merkle_root[2 * boffset + bword - 1 - j] = buff;
-            }
-            boffset += bword;
-        }
-    }
+    notify_message.ntime = 0x66221BDF; // actual time of resolved block, see blockchain.info/...
+    notify_message.difficulty = 64;
+    // expected nonce = 3529540887
     
-    char * merkle_root_rev = malloc(65);
-    memset(merkle_root_rev, '0', 64);
-    bin2hex(merkle_root, 32, merkle_root_rev, 64);
-    ESP_LOGI(TAG, "merkle_root_rev %s", merkle_root_rev);
+    // actual merkle_root of resolved block, see https://bitcoinexplorer.org/block-height/839900#JSON
+    char * merkle_root = "088083f58ddef995494fec492880da49e3463cc73dee1306dbdf6cf3af77454c";
 
-    bm_job job = construct_bm_job(&notify_message, merkle_root_rev, 0);
 
+    // construct job
+    bm_job job = construct_bm_job(&notify_message, merkle_root, 0);
+
+    /* debug code, should be removed once the test is functional */
     ESP_LOGI(TAG, "job.prev_block_hash:");
     ESP_LOG_BUFFER_HEX(TAG,  job.prev_block_hash, 32);
     ESP_LOGI(TAG, "job.prev_block_hash_be:");
@@ -211,36 +160,33 @@ TEST_CASE("Check known working", "[bm1366]")
     ESP_LOGI(TAG, "job.merkle_root_be:");
     ESP_LOG_BUFFER_HEX(TAG,  job.merkle_root_be, 32);
 
+    // set difficulty on chip to filter out lower difficulties
     (*GLOBAL_STATE.ASIC_functions.set_difficulty_mask_fn)(notify_message.difficulty);
 
-    ESP_LOGI(TAG, "Sending work");
+    ESP_LOGI(TAG, "Sending job to chip");
     (*GLOBAL_STATE.ASIC_functions.send_work_fn)(&GLOBAL_STATE, &job);
 
-    ESP_LOGI(TAG, "Receiving work");
+    ESP_LOGI(TAG, "Waiting for result ...");
     task_result * asic_result = (*GLOBAL_STATE.ASIC_functions.receive_result_fn)(&GLOBAL_STATE);
-    //TEST_ASSERT_NOT_NULL(asic_result);
 
-    int counter =0;
-    while (asic_result != NULL && counter < 10) {
-        ESP_LOGI(TAG, "Received work");
-    
-        // check the nonce difficulty
+    int counter = 1;
+    while (asic_result != NULL && counter <= 10) { // debug code, should be removed once the test is functional
+        
         double nonce_diff = test_nonce_value(&job, asic_result->nonce, asic_result->rolled_version);
-        ESP_LOGI(TAG, "Nonce %lu Nonce difficulty %.32f. rolled-version %08lx", asic_result->nonce, nonce_diff, asic_result->rolled_version);
-        //TEST_ASSERT_EQUAL_UINT32(3529540887, asic_result->nonce);
+        ESP_LOGI(TAG, "Result[%d]: Nonce %lu Nonce difficulty %.32f. rolled-version %08lx", counter, asic_result->nonce, nonce_diff, asic_result->rolled_version);
 
-        asic_result = (*GLOBAL_STATE.ASIC_functions.receive_result_fn)(&GLOBAL_STATE);
+        asic_result = (*GLOBAL_STATE.ASIC_functions.receive_result_fn)(&GLOBAL_STATE); // wait for next result
         counter++;
     }
 
-    
-
-    // memory
     free(GLOBAL_STATE.ASIC_TASK_MODULE.active_jobs);
     free(GLOBAL_STATE.valid_jobs);
 
     // turn ASIC off
     gpio_set_direction(GPIO_NUM_10, GPIO_MODE_OUTPUT);
     gpio_set_level(GPIO_NUM_10, 1);
+
+    //TEST_ASSERT_NOT_NULL(asic_result);
+    //TEST_ASSERT_EQUAL_UINT32(3529540887, asic_result->nonce);
 }
 
