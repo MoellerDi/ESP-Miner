@@ -97,7 +97,7 @@ TEST_CASE("Testing chip against known valid block", "[bm1366]")
     SERIAL_init();
 
     uint8_t chips_detected = (*GLOBAL_STATE.ASIC_functions.init_fn)(GLOBAL_STATE.POWER_MANAGEMENT_MODULE.frequency_value);
-    ESP_LOGI(TAG, "%u chips detected", chips_detected);
+    //ESP_LOGI(TAG, "%u chips detected", chips_detected);
     TEST_ASSERT_EQUAL_INT8(1, chips_detected); // to be adapted to the number of chips expected
 
     // set max baud rate
@@ -137,11 +137,12 @@ TEST_CASE("Testing chip against known valid block", "[bm1366]")
     mining_notify notify_message;
     notify_message.job_id = 839900; //Block #839900 - see above https://blockchain.info/rawblock/000000000000000000023dfafae2b6e6b5ecf9d1365fafa075dec49625721f37 or https://bitcoinexplorer.org/block-height/839900#JSON
     notify_message.prev_block_hash = "10439ba3ef4739860fb382d2abd355f7ee767c2400015d7e0000000000000000";
-    notify_message.version = 0x20000000;
+    notify_message.version = 0x20000000; // from mining.notify to test version rolling
     notify_message.target = 0x17034219;
     notify_message.ntime = 0x66221BDF; // actual time of resolved block, see blockchain.info/...
-    notify_message.difficulty = 64;
+    notify_message.difficulty = 64; // difficulty to be increased once test is functional
     // expected nonce = 3529540887
+    // expected version = 0x2a966000
     
     // actual merkle_root of resolved block, see https://bitcoinexplorer.org/block-height/839900#JSON
     char * merkle_root = "088083f58ddef995494fec492880da49e3463cc73dee1306dbdf6cf3af77454c";
@@ -150,7 +151,7 @@ TEST_CASE("Testing chip against known valid block", "[bm1366]")
     // construct job
     bm_job job = construct_bm_job(&notify_message, merkle_root, 0);
 
-    /* debug code, should be removed once the test is functional */
+    /* debug code, should be removed once test is functional */
     ESP_LOGI(TAG, "job.prev_block_hash:");
     ESP_LOG_BUFFER_HEX(TAG,  job.prev_block_hash, 32);
     ESP_LOGI(TAG, "job.prev_block_hash_be:");
@@ -170,10 +171,10 @@ TEST_CASE("Testing chip against known valid block", "[bm1366]")
     task_result * asic_result = (*GLOBAL_STATE.ASIC_functions.receive_result_fn)(&GLOBAL_STATE);
 
     int counter = 1;
-    while (asic_result != NULL && counter <= 10) { // debug code, should be removed once the test is functional
+    while (asic_result != NULL && counter <= 10) { // debug code, should be removed once test is functional
         
         double nonce_diff = test_nonce_value(&job, asic_result->nonce, asic_result->rolled_version);
-        ESP_LOGI(TAG, "Result[%d]: Nonce %lu Nonce difficulty %.32f. rolled-version %08lx", counter, asic_result->nonce, nonce_diff, asic_result->rolled_version);
+        ESP_LOGI(TAG, "Result[%d]: Nonce %lu Nonce difficulty %.32f. rolled-version 0x%08lx", counter, asic_result->nonce, nonce_diff, asic_result->rolled_version);
 
         asic_result = (*GLOBAL_STATE.ASIC_functions.receive_result_fn)(&GLOBAL_STATE); // wait for next result
         counter++;
@@ -187,6 +188,6 @@ TEST_CASE("Testing chip against known valid block", "[bm1366]")
     gpio_set_level(GPIO_NUM_10, 1);
 
     //TEST_ASSERT_NOT_NULL(asic_result);
-    //TEST_ASSERT_EQUAL_UINT32(3529540887, asic_result->nonce);
+    TEST_ASSERT_EQUAL_UINT32(3529540887, asic_result->nonce);
 }
 
