@@ -110,32 +110,30 @@ TEST_CASE("Check known working", "[bm1366]")
     SERIAL_set_baud((*GLOBAL_STATE.ASIC_functions.set_max_baud_fn)());
 
 
-/* 
-//Block #839666
-{"id":null,"method":"mining.notify","params":[
-    "15937dc", //job_id
-    "63461e09e27c1454ba1df8fdcd5f5f201f5ade7e0001cde80000000000000000", //prev_block_hash
-    "02000000010000000000000000000000000000000000000000000000000000000000000000ffffffff1703f2cf0c5075626c69632d506f6f6c", //coinbase_1
-    "ffffffff0283b14b2d00000000160014979f36b9a92622b82767820f6477bdefc03e86b70000000000000000266a24aa21a9ed43a609abf1b0ae9fb2a92451770c95ad623de1e7801af2f35a998d7fe6cc82ab00000000", //coinbase_2
-    [
-        "021d20e06085ef4970139c4c3e32336edbc113abcf78b32800c792c80e1fdb6b",
-        "f02fcbea9a3408c93385dabd064c3f971355b83ee614a1ffdc843327f8c5abc3",
-        "669aacb989a9b0e601a680364c3655b97efd5afb6886f054456e86f13bb5e4cb",
-        "99573b894dc4ac6a17d8d8ec3d059dc400ddc3433cfdace2db1d12c8365f1503",
-        "6ea792c5f736ac1b3a40b5662791bf6fda42e44693d13bc7f88fc7db649e6184",
-        "0364d05a228ff502680fd875246dbf7763b2fd4591dcd2dea4c541f2f2be9a38",
-        "2a8998a2178d3761d107b8ac3c04af7c996f6be8be4cd17c245a0a41d47f1cd6",
-        "73c2df2610c36fd1249622c0d93d67c7b5027cd013089e0320664ac706175d07",
-        "f960c56ac0f7ccefab021c945f444c7648bf1a277ab5b8f1fab524a03cc03f54",
-        "1b993d3325bef7e320060c529d60d0c42b07e87f5fcb5bab84c45146239e4d75",
-        "139467baf2e565b976528b5102c54faa10d4b9560005afdd7df0def1ce00edc1",
-        "c89bd65989a888f1c3f03d189e26892bf62c84e1e6f620294199f5178c53583e",
-        "37883d69fbc3f396aacc76287d39e9d70a0859948d17dd9170a8da5aba636178"
-    ],
-    "20000000", //version
-    "17034219", //target
-    "66200c3f", //ntime
-    false] //clear_jobs
+/* Block #839900
+    {"id":null,"method":"mining.notify","params":[
+        "185abf4", //job_id
+        "10439ba3ef4739860fb382d2abd355f7ee767c2400015d7e0000000000000000", //prev_block_hash
+        "02000000010000000000000000000000000000000000000000000000000000000000000000ffffffff1703dcd00c5075626c69632d506f6f6c", //coinbase_1
+        "ffffffff025ef88d2700000000160014979f36b9a92622b82767820f6477bdefc03e86b70000000000000000266a24aa21a9ed4b7e3a6c3bf8bff6e793b507392ae3cb0deab4c8908ce351e61d0af0ac06bdc000000000", //coinbase_2
+        [
+            "7e3f8209b0d3e7fcfaf4c89162636bc1756d2bc3bfcdc7a7135136ff6d7b0069",
+            "e66c3e07dee92d95bb4895580fb3584f2fe1d29033818846286e23cddf9bf572",
+            "5a9ff7e4b64934437af73e3fa4e5a783d9b1421de19a605b8e30edfce5d055a5",
+            "d3d38299563f8a6cac7821096c6e9f8fbbe77bd063adb0687035f5cde2ff4dd0",
+            "72dca2b4288e4288d1c9b79df8b88b0a24e3f85e901e99eeb62014288651ef26",
+            "b417f18e7774cb36e5009f239fe08c1407dde49a7b19cf4230b67de9a348b502",
+            "01261cd686cde5b97cf989953b0a0e1630c016f187a6f6e7fc44b40c950d3571",
+            "6076764edef31739c715acfe5d2a480624779998987d60520033b731da129f37",
+            "a953f2b682496e2777938d01f7a6626435406236d8caa64fb8a7f2a9bd05e6ff",
+            "479e0549bd963a3d7f6747bdd3f615fced29a003d959d4c740c29a49943d16cf",
+            "a1714ab576e5228e10ee4b6aa032412e9c20015b52a4516842358fb28cef3c7e",
+            "fcb3c52ae1f391246b6250c178040d6b7fa9725391a65315e6e9dc0c1e32e336"
+        ],
+        "20000000", //version
+        "17034219", //target
+        "66221ad7", //ntime
+        false] //clear_jobs
     }
 */
 
@@ -148,10 +146,10 @@ TEST_CASE("Check known working", "[bm1366]")
     size_t boffset, bword, bsize;
 
     uint8_t prev_block_hash[32];
-    hex2bin("00000000000000000001cde81f5ade7ecd5f5f20ba1df8fde27c145463461e09", prev_block_hash, 32);
+    hex2bin("000000000000000000015d7eee767c24abd355f70fb382d2ef47398610439ba3", prev_block_hash, 32);
     if (rev_prev_block_hash) {reverse_bytes(prev_block_hash, 32);}
     if (swap_endian_prev_block_hask) {
-        // reverse prev hash (4-byte word swap)
+        // reverse (4-byte word swap)
         boffset = 0;
         bword = 4;
         bsize = 32;
@@ -167,20 +165,20 @@ TEST_CASE("Check known working", "[bm1366]")
     
     char * prev_block_hash_rev = malloc(65);
     memset(prev_block_hash_rev, '0', 64);
-    bin2hex(prev_block_hash, 32, prev_block_hash_rev, 65);
+    bin2hex(prev_block_hash, 32, prev_block_hash_rev, 64);
     ESP_LOGI(TAG, "prev_block_hash_rev %s", prev_block_hash_rev);
 
     mining_notify notify_message;
-    notify_message.job_id = 0; //Block #839666
+    notify_message.job_id = 0; //Block #839900
     notify_message.prev_block_hash   = prev_block_hash_rev;
     notify_message.version = 0x20000000; //0x20106000;
     notify_message.target = 0x17034219;
-    notify_message.ntime = 1713376819;
+    notify_message.ntime = 1713511391;
     notify_message.difficulty = 128;
     notify_message.version_mask = 0x1fffe000;
 
     uint8_t merkle_root[32];
-    hex2bin("2836bac5721062dfec270ebf9b554d002612ab6c1a0c05bd43d471892496c205", merkle_root, 32);
+    hex2bin("088083f58ddef995494fec492880da49e3463cc73dee1306dbdf6cf3af77454c", merkle_root, 32);
     if (rev_merkle_root_hash) {reverse_bytes(merkle_root, 32);}
     if (swap_endian_merkle_root_hash) {
         // reverse (4-byte word swap)
@@ -199,7 +197,7 @@ TEST_CASE("Check known working", "[bm1366]")
     
     char * merkle_root_rev = malloc(65);
     memset(merkle_root_rev, '0', 64);
-    bin2hex(merkle_root, 32, merkle_root_rev, 65);
+    bin2hex(merkle_root, 32, merkle_root_rev, 64);
     ESP_LOGI(TAG, "merkle_root_rev %s", merkle_root_rev);
 
     bm_job job = construct_bm_job(&notify_message, merkle_root_rev, 0);
@@ -229,7 +227,7 @@ TEST_CASE("Check known working", "[bm1366]")
         // check the nonce difficulty
         double nonce_diff = test_nonce_value(&job, asic_result->nonce, asic_result->rolled_version);
         ESP_LOGI(TAG, "Nonce %lu Nonce difficulty %.32f. rolled-version %08lx", asic_result->nonce, nonce_diff, asic_result->rolled_version);
-        //TEST_ASSERT_EQUAL_UINT32(1720357422, asic_result->nonce);
+        //TEST_ASSERT_EQUAL_UINT32(3529540887, asic_result->nonce);
 
         asic_result = (*GLOBAL_STATE.ASIC_functions.receive_result_fn)(&GLOBAL_STATE);
         counter++;
