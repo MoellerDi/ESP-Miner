@@ -20,7 +20,7 @@ static GlobalState GLOBAL_STATE = {.extranonce_str = NULL, .extranonce_2_len = 0
 
 static const char * TAG = "test_bm1366";
 
-TEST_CASE("Check known working block", "[bm1366]")
+TEST_CASE("Testing chip against known valid block", "[bm1366]")
 {
     ESP_ERROR_CHECK(nvs_flash_init());
 
