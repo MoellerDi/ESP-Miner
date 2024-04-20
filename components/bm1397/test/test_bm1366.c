@@ -172,8 +172,11 @@ TEST_CASE("Testing chip against known valid block", "[bm1366]")
     task_result * asic_result = NULL;
 
     for (uint8_t i = 96; i < 128; i++) {
-        ESP_LOGI(TAG, "Changing chip address and sending job; new chip address: 0x%02x", i*2);
-        BM1366_set_chip_address(i);
+
+        uint8_t chip_address = i * 2;
+        
+        ESP_LOGI(TAG, "Changing chip address and sending job; new chip address: 0x%02x", chip_address);
+        BM1366_set_chip_address(chip_address);
         (*GLOBAL_STATE.ASIC_functions.send_work_fn)(&GLOBAL_STATE, &job);
 
         ESP_LOGI(TAG, "Waiting for result ...");
