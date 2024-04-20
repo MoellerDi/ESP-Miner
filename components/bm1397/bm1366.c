@@ -562,6 +562,15 @@ uint8_t BM1366_init(uint64_t frequency)
     return _send_init(frequency);
 }
 
+void BM1366_set_chip_address(uint8_t new_address)
+{
+    unsigned char init6[7] = {0x55, 0xAA, 0x53, 0x05, 0x00, 0x00, 0x03};
+    _send_simple(init6, 7);
+
+    unsigned char address[2] = {new_address * 2, 0x00};
+    _send_BM1366((TYPE_CMD | GROUP_SINGLE | CMD_SETADDRESS), address, 2, false);
+}
+
 // Baud formula = 25M/((denominator+1)*8)
 // The denominator is 5 bits found in the misc_control (bits 9-13)
 int BM1366_set_default_baud(void)
