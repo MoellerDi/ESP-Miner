@@ -439,11 +439,11 @@ static uint8_t _send_init(uint64_t frequency)
 
     //enable and set version rolling mask to 0xFFFF (again)
     unsigned char init1[11] = {0x55, 0xAA, 0x51, 0x09, 0x00, 0xA4, 0x90, 0x00, 0xFF, 0xFF, 0x1C};
-    _send_simple(init1, 11);
+    //_send_simple(init1, 11);
 
     //enable and set version rolling mask to 0xFFFF (again)
     unsigned char init2[11] = {0x55, 0xAA, 0x51, 0x09, 0x00, 0xA4, 0x90, 0x00, 0xFF, 0xFF, 0x1C};
-    _send_simple(init2, 11);
+    //_send_simple(init2, 11);
 
     //read register 00 on all chips
     unsigned char init3[7] = {0x55, 0xAA, 0x52, 0x05, 0x00, 0x00, 0x0A};
@@ -459,53 +459,75 @@ static uint8_t _send_init(uint64_t frequency)
     }
     ESP_LOGI(TAG, "%i chip(s) detected on the chain", chip_counter);
 
+    //Reg_A8
     unsigned char init4[11] = {0x55, 0xAA, 0x51, 0x09, 0x00, 0xA8, 0x00, 0x07, 0x00, 0x00, 0x03};
-    _send_simple(init4, 11);
+    //_send_simple(init4, 11);
 
+    //Misc Control
     unsigned char init5[11] = {0x55, 0xAA, 0x51, 0x09, 0x00, 0x18, 0xFF, 0x0F, 0xC1, 0x00, 0x00};
     _send_simple(init5, 11);
 
+    //chain inactive
     unsigned char init6[7] = {0x55, 0xAA, 0x53, 0x05, 0x00, 0x00, 0x03};
     _send_simple(init6, 7);
 
-    unsigned char init7[7] = {0x55, 0xAA, 0x40, 0x05, 0x00, 0x00, 0x1C};
-    _send_simple(init7, 7);
+    //assign address 0x00 to the first chip
+    //unsigned char init7[7] = {0x55, 0xAA, 0x40, 0x05, 0x00, 0x00, 0x1C};
+    //_send_simple(init7, 7);
 
+    for (int i = 0; i < chip_counter; i++) {
+        unsigned char address[2] = {33 * 2, 0x00};
+        _send_BM1366((TYPE_CMD | GROUP_SINGLE | CMD_SETADDRESS), address, 2, true);
+        //_send_BM1366((TYPE_CMD | GROUP_SINGLE | CMD_SETADDRESS), 0x0500, 2, true);
+    }
+
+    //Core Register Control
     unsigned char init135[11] = {0x55, 0xAA, 0x51, 0x09, 0x00, 0x3C, 0x80, 0x00, 0x85, 0x40, 0x0C};
-    _send_simple(init135, 11);
+    //_send_simple(init135, 11);
 
+    //Core Register Control
     unsigned char init136[11] = {0x55, 0xAA, 0x51, 0x09, 0x00, 0x3C, 0x80, 0x00, 0x80, 0x20, 0x19};
-    _send_simple(init136, 11);
+    //_send_simple(init136, 11);
 
+    //set ticket mask
     unsigned char init137[11] = {0x55, 0xAA, 0x51, 0x09, 0x00, 0x14, 0x00, 0x00, 0x00, 0xFF, 0x08};
-    _send_simple(init137, 11);
+    //_send_simple(init137, 11);
 
+    //Analog Mux Control
     unsigned char init138[11] = {0x55, 0xAA, 0x51, 0x09, 0x00, 0x54, 0x00, 0x00, 0x00, 0x03, 0x1D};
-    _send_simple(init138, 11);
+    //_send_simple(init138, 11);
 
+    //Set the IO Driver Strength on chip 00
     unsigned char init139[11] = {0x55, 0xAA, 0x51, 0x09, 0x00, 0x58, 0x02, 0x11, 0x11, 0x11, 0x06};
-    _send_simple(init139, 11);
+    //_send_simple(init139, 11);
 
+    //UART Relay
     unsigned char init171[11] = {0x55, 0xAA, 0x41, 0x09, 0x00, 0x2C, 0x00, 0x7C, 0x00, 0x03, 0x03};
-    _send_simple(init171, 11);
+    //_send_simple(init171, 11);
 
+    //FAST_UART_CONFIGURATION
     unsigned char init173[11] = {0x55, 0xAA, 0x51, 0x09, 0x00, 0x28, 0x11, 0x30, 0x02, 0x00, 0x03};
     _send_simple(init173, 11);
 
+    //Reg_A8 for each chip
     unsigned char init174[11] = {0x55, 0xAA, 0x41, 0x09, 0x00, 0xA8, 0x00, 0x07, 0x01, 0xF0, 0x15};
-    _send_simple(init174, 11);
+    //_send_simple(init174, 11);
 
+    //Misc Control for each chip
     unsigned char init175[11] = {0x55, 0xAA, 0x41, 0x09, 0x00, 0x18, 0xF0, 0x00, 0xC1, 0x00, 0x0C};
-    _send_simple(init175, 11);
+    //_send_simple(init175, 11);
 
+    //Core Register Control for each chip
     unsigned char init176[11] = {0x55, 0xAA, 0x41, 0x09, 0x00, 0x3C, 0x80, 0x00, 0x85, 0x40, 0x04};
-    _send_simple(init176, 11);
+    //_send_simple(init176, 11);
 
+    //Core Register Control for each chip
     unsigned char init177[11] = {0x55, 0xAA, 0x41, 0x09, 0x00, 0x3C, 0x80, 0x00, 0x80, 0x20, 0x11};
-    _send_simple(init177, 11);
+    //_send_simple(init177, 11);
 
+    //Core Register Control for each chip
     unsigned char init178[11] = {0x55, 0xAA, 0x41, 0x09, 0x00, 0x3C, 0x80, 0x00, 0x82, 0xAA, 0x05};
-    _send_simple(init178, 11);
+    //_send_simple(init178, 11);
 
     do_frequency_ramp_up();
 
@@ -560,6 +582,30 @@ uint8_t BM1366_init(uint64_t frequency)
     //_send_read_address();
 
     return _send_init(frequency);
+}
+
+void BM1366_set_chip_address(uint8_t new_address)
+{
+    unsigned char init6[7] = {0x55, 0xAA, 0x53, 0x05, 0x00, 0x00, 0x03};
+    _send_simple(init6, 7);
+
+    unsigned char address[2] = {new_address * 2, 0x00};
+    _send_BM1366((TYPE_CMD | GROUP_SINGLE | CMD_SETADDRESS), address, 2, false);
+
+    /*
+    //read register 00 on all chips
+    unsigned char init3[7] = {0x55, 0xAA, 0x52, 0x05, 0x00, 0x00, 0x0A};
+    _send_simple(init3, 7);
+
+    int chip_counter = 0;
+    while (true) {
+        if (SERIAL_rx(asic_response_buffer, 11, 1000) > 0) {
+            chip_counter++;
+        } else {
+            break;
+        }
+    }
+    */
 }
 
 // Baud formula = 25M/((denominator+1)*8)
@@ -650,7 +696,7 @@ void BM1366_send_work(void * pvParameters, bm_job * next_bm_job)
 
     pthread_mutex_unlock(&GLOBAL_STATE->valid_jobs_lock);
 
-    _send_BM1366((TYPE_JOB | GROUP_SINGLE | CMD_WRITE), &job, sizeof(BM1366_job), true);
+    _send_BM1366((TYPE_JOB | GROUP_SINGLE | CMD_WRITE), &job, sizeof(BM1366_job), false);
 }
 
 asic_result * BM1366_receive_work(void)

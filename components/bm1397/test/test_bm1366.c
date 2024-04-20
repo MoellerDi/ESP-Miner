@@ -164,20 +164,33 @@ TEST_CASE("Testing chip against known valid block", "[bm1366]")
     // set difficulty on chip to filter out lower difficulties
     (*GLOBAL_STATE.ASIC_functions.set_difficulty_mask_fn)(notify_message.difficulty);
 
-    ESP_LOGI(TAG, "Sending job to chip");
-    (*GLOBAL_STATE.ASIC_functions.send_work_fn)(&GLOBAL_STATE, &job);
+    //ESP_LOGI(TAG, "Sending job to chip");
+    //(*GLOBAL_STATE.ASIC_functions.send_work_fn)(&GLOBAL_STATE, &job);
 
-    ESP_LOGI(TAG, "Waiting for result ...");
-    task_result * asic_result = (*GLOBAL_STATE.ASIC_functions.receive_result_fn)(&GLOBAL_STATE);
+    //ESP_LOGI(TAG, "Waiting for result ...");
+    //task_result * asic_result = (*GLOBAL_STATE.ASIC_functions.receive_result_fn)(&GLOBAL_STATE);
 
-    int counter = 1;
-    while (asic_result != NULL && counter <= 10) { // debug code, should be removed once test is functional
+    task_result * asic_result = NULL;
+
+    for (uint8_t i = 10; i < 128; i++) {
         
-        double nonce_diff = test_nonce_value(&job, asic_result->nonce, asic_result->rolled_version);
-        ESP_LOGI(TAG, "Result[%d]: Nonce %lu Nonce difficulty %.32f. rolled-version 0x%08lx", counter, asic_result->nonce, nonce_diff, asic_result->rolled_version);
+        BM1366_set_chip_address(i);
 
-        asic_result = (*GLOBAL_STATE.ASIC_functions.receive_result_fn)(&GLOBAL_STATE); // wait for next result
-        counter++;
+        ESP_LOGI(TAG, "Sending job to chip %d", i);
+        (*GLOBAL_STATE.ASIC_functions.send_work_fn)(&GLOBAL_STATE, &job);
+
+        ESP_LOGI(TAG, "Waiting for result ...");
+        asic_result = (*GLOBAL_STATE.ASIC_functions.receive_result_fn)(&GLOBAL_STATE);
+
+        int counter = 1;
+        while (asic_result != NULL && counter <= 10) { // debug code, should be removed once test is functional
+            
+            double nonce_diff = test_nonce_value(&job, asic_result->nonce, asic_result->rolled_version);
+            ESP_LOGI(TAG, "Result[%d]: Nonce %lu Nonce difficulty %.32f. rolled-version 0x%08lx", counter, asic_result->nonce, nonce_diff, asic_result->rolled_version);
+
+            asic_result = (*GLOBAL_STATE.ASIC_functions.receive_result_fn)(&GLOBAL_STATE); // wait for next result
+            counter++;
+        }
     }
 
     free(GLOBAL_STATE.ASIC_TASK_MODULE.active_jobs);

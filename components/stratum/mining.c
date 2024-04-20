@@ -5,6 +5,8 @@
 #include "utils.h"
 #include "mbedtls/sha256.h"
 
+#include "esp_log.h"
+
 void free_bm_job(bm_job *job)
 {
     free(job->jobid);
@@ -157,6 +159,7 @@ double test_nonce_value(const bm_job *job, const uint32_t nonce, const uint32_t 
 
     d64 = truediffone;
     s64 = le256todouble(hash_result);
+    //ESP_LOG_BUFFER_HEX("hash_result",  hash_result, 32);
     ds = d64 / s64;
 
     return ds;
