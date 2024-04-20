@@ -68,7 +68,7 @@ bm_job construct_bm_job(mining_notify *params, const char *merkle_root, const ui
 
     // hex2bin(merkle_root, new_job.merkle_root_be, 32);
     swap_endian_words(merkle_root, new_job.merkle_root_be);
-    reverse_bytes(new_job.merkle_root_be, 32);
+    //reverse_bytes(new_job.merkle_root_be, 32);
 
     swap_endian_words(params->prev_block_hash, new_job.prev_block_hash);
 

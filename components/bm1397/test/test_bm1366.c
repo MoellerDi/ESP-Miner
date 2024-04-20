@@ -172,21 +172,24 @@ TEST_CASE("Testing chip against known valid block", "[bm1366]")
 
     task_result * asic_result = NULL;
 
-    for (uint8_t i = 10; i < 128; i++) {
+    for (uint8_t i = 90; i < 128; i++) {
         
-        BM1366_set_chip_address(i);
+        
 
-        ESP_LOGI(TAG, "Sending job to chip %d", i);
+        ESP_LOGI(TAG, "Changing chip address and sending job; new chip address: 0x%02x", i*2);
+        BM1366_set_chip_address(i);
         (*GLOBAL_STATE.ASIC_functions.send_work_fn)(&GLOBAL_STATE, &job);
 
         ESP_LOGI(TAG, "Waiting for result ...");
         asic_result = (*GLOBAL_STATE.ASIC_functions.receive_result_fn)(&GLOBAL_STATE);
 
         int counter = 1;
-        while (asic_result != NULL && counter <= 10) { // debug code, should be removed once test is functional
-            
+        while (asic_result != NULL && counter <= 15) { // debug code, should be removed once test is functional
+
             double nonce_diff = test_nonce_value(&job, asic_result->nonce, asic_result->rolled_version);
             ESP_LOGI(TAG, "Result[%d]: Nonce %lu Nonce difficulty %.32f. rolled-version 0x%08lx", counter, asic_result->nonce, nonce_diff, asic_result->rolled_version);
+
+            TEST_ASSERT_NOT_EQUAL_UINT32(3529540887, asic_result->nonce);
 
             asic_result = (*GLOBAL_STATE.ASIC_functions.receive_result_fn)(&GLOBAL_STATE); // wait for next result
             counter++;
