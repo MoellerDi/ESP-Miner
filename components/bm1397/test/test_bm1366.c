@@ -140,13 +140,12 @@ TEST_CASE("Testing chip against known valid block", "[bm1366]")
     notify_message.version = 0x20000000; // from mining.notify to test version rolling
     notify_message.target = 0x17034219;
     notify_message.ntime = 0x66221BDF; // actual time of resolved block, see blockchain.info/...
-    notify_message.difficulty = 64; // difficulty to be increased once test is functional
-    // expected nonce = 3529540887
-    // expected version = 0x2a966000
+    notify_message.difficulty = 524288;
+    const uint32_t expected_nonce = 3529540887;
+    const uint32_t expected_version = 0x2a966000;
     
     // actual merkle_root of resolved block, see https://bitcoinexplorer.org/block-height/839900#JSON
     char * merkle_root = "088083f58ddef995494fec492880da49e3463cc73dee1306dbdf6cf3af77454c";
-
 
     // construct job
     bm_job job = construct_bm_job(&notify_message, merkle_root, 0);
@@ -172,10 +171,7 @@ TEST_CASE("Testing chip against known valid block", "[bm1366]")
 
     task_result * asic_result = NULL;
 
-    for (uint8_t i = 90; i < 128; i++) {
-        
-        
-
+    for (uint8_t i = 96; i < 128; i++) {
         ESP_LOGI(TAG, "Changing chip address and sending job; new chip address: 0x%02x", i*2);
         BM1366_set_chip_address(i);
         (*GLOBAL_STATE.ASIC_functions.send_work_fn)(&GLOBAL_STATE, &job);
@@ -189,10 +185,17 @@ TEST_CASE("Testing chip against known valid block", "[bm1366]")
             double nonce_diff = test_nonce_value(&job, asic_result->nonce, asic_result->rolled_version);
             ESP_LOGI(TAG, "Result[%d]: Nonce %lu Nonce difficulty %.32f. rolled-version 0x%08lx", counter, asic_result->nonce, nonce_diff, asic_result->rolled_version);
 
-            TEST_ASSERT_NOT_EQUAL_UINT32(3529540887, asic_result->nonce);
+            //TEST_ASSERT_NOT_EQUAL_UINT32(3529540887, asic_result->nonce);
+            if (asic_result->nonce == expected_nonce && asic_result->rolled_version == expected_version) {
+                ESP_LOGI(TAG, "Expected nonce and version found!");
+                break;
+            }
 
             asic_result = (*GLOBAL_STATE.ASIC_functions.receive_result_fn)(&GLOBAL_STATE); // wait for next result
             counter++;
+        }
+        if (asic_result != NULL && asic_result->nonce == expected_nonce) {
+            break;
         }
     }
 
@@ -203,7 +206,7 @@ TEST_CASE("Testing chip against known valid block", "[bm1366]")
     gpio_set_direction(GPIO_NUM_10, GPIO_MODE_OUTPUT);
     gpio_set_level(GPIO_NUM_10, 1);
 
-    //TEST_ASSERT_NOT_NULL(asic_result);
-    TEST_ASSERT_EQUAL_UINT32(3529540887, asic_result->nonce);
+    TEST_ASSERT_NOT_NULL(asic_result);
+    TEST_ASSERT_EQUAL_UINT32(expected_nonce, asic_result->nonce);
 }
 

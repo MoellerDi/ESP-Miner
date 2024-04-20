@@ -583,22 +583,7 @@ void BM1366_set_chip_address(uint8_t new_address)
     _send_simple(init6, 7);
 
     unsigned char address[2] = {new_address * 2, 0x00};
-    _send_BM1366((TYPE_CMD | GROUP_SINGLE | CMD_SETADDRESS), address, 2, true);
-
-    /*
-    //read register 00 on all chips
-    unsigned char init3[7] = {0x55, 0xAA, 0x52, 0x05, 0x00, 0x00, 0x0A};
-    _send_simple(init3, 7);
-
-    int chip_counter = 0;
-    while (true) {
-        if (SERIAL_rx(asic_response_buffer, 11, 1000) > 0) {
-            chip_counter++;
-        } else {
-            break;
-        }
-    }
-    */
+    _send_BM1366((TYPE_CMD | GROUP_SINGLE | CMD_SETADDRESS), address, 2, false);
 }
 
 // Baud formula = 25M/((denominator+1)*8)
