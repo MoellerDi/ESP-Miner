@@ -2,7 +2,7 @@ import hashlib
 from binascii import unhexlify, hexlify
 
 """
-Block data from https://blockchain.info/rawblock/000000000000000000023dfafae2b6e6b5ecf9d1365fafa075dec49625721f37
+Block #839900, data from https://blockchain.info/rawblock/000000000000000000023dfafae2b6e6b5ecf9d1365fafa075dec49625721f37
 """
 btc_version = 714498048
 hex_prev_hash = "000000000000000000015d7eee767c24abd355f70fb382d2ef47398610439ba3"
@@ -42,6 +42,7 @@ header_hex = (
 )
 
 header_bin = unhexlify(header_hex)
+print("header:", hexlify(header_bin).decode("utf-8"))
 hash = hashlib.sha256(hashlib.sha256(header_bin).digest()).digest()
-print(hexlify(hash[::-1]).decode("utf-8"))
+print("hash:", hexlify(hash[::-1]).decode("utf-8"))
 
