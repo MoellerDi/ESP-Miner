@@ -165,8 +165,9 @@ TEST_CASE("Testing single BM1366 chip against a known valid block", "[bm1366]")
     // It seems that the chip (each chip address) has a different nonce space and 
     // in order to cover the whole nonce space, we need to have 128 chips (chip address 0-127).
     // So we need to change the chip address to selecct the correct nonce space.
-    // The solution for block #839900 (the block we are using in this test) 
-    // should be in nonce space of chip address 0xc2. That's why change the chip address and start at 97 (97 * 2 = 194 = 0xc2)
+    // The solution for block #839900 (the block we are using in this test) should be in nonce space of chip address 0xc2.
+    // In order to show and proof the different nonce scapes per chip address, we start at 96 (96 * 2 = 192 = 0xc0).
+    // It is expected to not find a solution in nonce space of chip address 0xc0.
     // This unit test is designed to test one single BM1366 chip.
     for (uint8_t i = 96; i < 128; i++) {
 

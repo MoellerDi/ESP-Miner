@@ -21,6 +21,6 @@
     "cSpell.words": [
         "ssid"
     ],
-    "idf.port": "/dev/ttyACM1",
+    "idf.port": "/dev/ttyACM0",
     "C_Cpp.intelliSenseEngine": "Tag Parser"
 }
