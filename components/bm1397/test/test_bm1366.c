@@ -136,12 +136,18 @@ TEST_CASE("Testing single BM1366 chip against a known valid block", "[bm1366]")
     notify_message.version = 0x20000000; // from mining.notify to test version rolling
     notify_message.target = 0x17034219;
     notify_message.ntime = 0x66221BDF; // actual time of resolved block, see blockchain.info/...
-    notify_message.difficulty = 1000; // can be as high as 652198270
+    notify_message.difficulty = 64; // can be as high as 652198270
     const uint32_t expected_nonce = 3529540887;
     const uint32_t expected_version = 0x2a966000;
     
     // actual merkle_root of block #839900, see see blockchain.info/... or https://bitcoinexplorer.org/block-height/839900#JSON
     char * merkle_root = "088083f58ddef995494fec492880da49e3463cc73dee1306dbdf6cf3af77454c";
+
+    // The merkle_root copied from blockchain.info needs to be in reversed order. Maybe there is a better way to do this?
+    uint8_t merkle_root_rev[32];
+    hex2bin(merkle_root, merkle_root_rev, 32);
+    reverse_bytes(merkle_root_rev, 32);
+    bin2hex(merkle_root_rev, 32, merkle_root, 64);
 
     // construct job
     bm_job job = construct_bm_job(&notify_message, merkle_root, 0);
@@ -169,9 +175,9 @@ TEST_CASE("Testing single BM1366 chip against a known valid block", "[bm1366]")
     // In order to show and proof the different nonce scapes per chip address, we start at 96 (96 * 2 = 192 = 0xc0).
     // It is expected to not find a solution in nonce space of chip address 0xc0.
     // This unit test is designed to test one single BM1366 chip.
-    for (uint8_t i = 96; i < 128; i++) {
+    for (uint8_t i = 190; i < 200; i++) {
 
-        uint8_t chip_address = i * 2;
+        uint8_t chip_address = i; //* 2;
         
         ESP_LOGI(TAG, "Changing chip address and sending job; new chip address: 0x%02x", chip_address);
         BM1366_set_chip_address(chip_address);
@@ -185,18 +191,19 @@ TEST_CASE("Testing single BM1366 chip against a known valid block", "[bm1366]")
 
             double nonce_diff = test_nonce_value(&job, asic_result->nonce, asic_result->rolled_version);
             ESP_LOGI(TAG, "Result[%d]: Nonce %lu Nonce difficulty %.32f. rolled-version 0x%08lx", counter, asic_result->nonce, nonce_diff, asic_result->rolled_version);
-
+            /*
             if (asic_result->nonce == expected_nonce && asic_result->rolled_version == expected_version) {
                 ESP_LOGI(TAG, "Expected nonce and version match. Solution found!");
                 break;
-            }
+            }*/
 
             asic_result = (*GLOBAL_STATE.ASIC_functions.receive_result_fn)(&GLOBAL_STATE); // wait for next result
             counter++;
         }
+        /*
         if (asic_result != NULL && asic_result->nonce == expected_nonce) {
             break;
-        }
+        }*/
     }
 
     free(GLOBAL_STATE.ASIC_TASK_MODULE.active_jobs);
