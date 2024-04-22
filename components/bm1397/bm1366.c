@@ -586,6 +586,15 @@ void BM1366_set_chip_address(uint8_t chipAddr)
 
     // set new chip address. First chip in chain_inactive mode will now be addressed by the new address
     _set_chip_address(chipAddr);
+
+
+    //55 AA 41 09 00 A8 00 07 01 F0 15 //Reg_A8 unknown
+    //unsigned char data[9] = {0x00, 0xA8, 0b00000000, 0b00000111, 0b00000001, 0b11110000};
+    //_send_BM1366((TYPE_CMD | GROUP_ALL | CMD_WRITE), data, 6, false);
+
+    //55 AA 41 09 00 18 F0 00 C1 00 0C //Misc Control
+    //unsigned char data1[9] = {0x00, 0x18, 0b11110000, 0b00000000, 0b11000001, 0b00000000};
+    //_send_BM1366((TYPE_CMD | GROUP_ALL | CMD_WRITE), data1, 6, false);
 }
 
 // Baud formula = 25M/((denominator+1)*8)
@@ -682,7 +691,7 @@ void BM1366_send_work(void * pvParameters, bm_job * next_bm_job)
 asic_result * BM1366_receive_work(void)
 {
     // wait for a response, wait time is pretty arbitrary
-    int received = SERIAL_rx(asic_response_buffer, 11, 60000);
+    int received = SERIAL_rx(asic_response_buffer, 11, 15000);
 
     if (received < 0) {
         ESP_LOGI(TAG, "Error in serial RX");

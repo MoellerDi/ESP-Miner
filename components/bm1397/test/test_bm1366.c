@@ -175,9 +175,9 @@ TEST_CASE("Testing single BM1366 chip against a known valid block", "[bm1366]")
     // In order to show and proof the different nonce scapes per chip address, we start at 96 (96 * 2 = 192 = 0xc0).
     // It is expected to not find a solution in nonce space of chip address 0xc0.
     // This unit test is designed to test one single BM1366 chip.
-    for (uint8_t i = 190; i < 200; i++) {
+    for (uint8_t i = 96; i < 128; i++) {
 
-        uint8_t chip_address = i; //* 2;
+        uint8_t chip_address = i * 2;
         
         ESP_LOGI(TAG, "Changing chip address and sending job; new chip address: 0x%02x", chip_address);
         BM1366_set_chip_address(chip_address);
