@@ -491,7 +491,7 @@ static uint8_t _send_init(uint64_t frequency)
     unsigned char init138[11] = {0x55, 0xAA, 0x51, 0x09, 0x00, 0x54, 0x00, 0x00, 0x00, 0x03, 0x1D};
     _send_simple(init138, 11);
 
-    //Set the IO Driver Strength on chip 00
+    //Set the IO Driver Strength
     unsigned char init139[11] = {0x55, 0xAA, 0x51, 0x09, 0x00, 0x58, 0x02, 0x11, 0x11, 0x11, 0x06};
     _send_simple(init139, 11);
 
@@ -527,6 +527,7 @@ static uint8_t _send_init(uint64_t frequency)
 
     BM1366_send_hash_frequency(frequency);
 
+    //Hash Counting Number?
     unsigned char init794[11] = {0x55, 0xAA, 0x51, 0x09, 0x00, 0x10, 0x00, 0x00, 0x15, 0x1C, 0x02};
     _send_simple(init794, 11);
 
