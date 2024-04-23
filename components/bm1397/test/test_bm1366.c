@@ -136,7 +136,7 @@ TEST_CASE("Testing single BM1366 chip against a known valid block", "[bm1366]")
     notify_message.version = 0x20000000; // from mining.notify to test version rolling
     notify_message.target = 0x17034219;
     notify_message.ntime = 0x66221BDF; // actual time of resolved block, see blockchain.info/...
-    notify_message.difficulty = 64; // can be as high as 652198270
+    notify_message.difficulty = 1024; // can be as high as 652198270
     const uint32_t expected_nonce = 3529540887;
     const uint32_t expected_version = 0x2a966000;
     
@@ -175,22 +175,22 @@ TEST_CASE("Testing single BM1366 chip against a known valid block", "[bm1366]")
     // In order to show and proof the different nonce scapes per chip address, we start at 96 (96 * 2 = 192 = 0xc0).
     // It is expected to not find a solution in nonce space of chip address 0xc0.
     // This unit test is designed to test one single BM1366 chip.
-    for (uint8_t i = 96; i < 128; i++) {
+    for (uint16_t i = 0; i < 256; i=i+64) {
 
-        uint8_t chip_address = i * 2;
+        uint8_t chip_address = i; // * 2;
         
         ESP_LOGI(TAG, "Changing chip address and sending job; new chip address: 0x%02x", chip_address);
         BM1366_set_chip_address(chip_address);
         (*GLOBAL_STATE.ASIC_functions.send_work_fn)(&GLOBAL_STATE, &job);
 
-        ESP_LOGI(TAG, "Waiting for result ... (might take a while due to 60s timeout)");
+        ESP_LOGI(TAG, "Waiting for result ... (might take a while)");
         asic_result = (*GLOBAL_STATE.ASIC_functions.receive_result_fn)(&GLOBAL_STATE);
 
         int counter = 1;
-        while (asic_result != NULL && counter <= 10) {
+        while (asic_result != NULL && counter <= 60) {
 
             double nonce_diff = test_nonce_value(&job, asic_result->nonce, asic_result->rolled_version);
-            ESP_LOGI(TAG, "Result[%d]: Nonce %lu Nonce difficulty %.32f. rolled-version 0x%08lx", counter, asic_result->nonce, nonce_diff, asic_result->rolled_version);
+            ESP_LOGI(TAG, "Result[%d]: Nonce %lu (0x%08lx) Nonce difficulty %.32f. rolled-version 0x%08lx", counter, asic_result->nonce, asic_result->nonce, nonce_diff, asic_result->rolled_version);
             /*
             if (asic_result->nonce == expected_nonce && asic_result->rolled_version == expected_version) {
                 ESP_LOGI(TAG, "Expected nonce and version match. Solution found!");
