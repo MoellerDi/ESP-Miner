@@ -24,9 +24,10 @@ S19xp-luxos (110 chips):
 2^32 / 2^7 - 2^(32-7) = 0 
 
 
-
-
-
+S19xp-org (110 chips):
+55 AA 51 09 00 10 00 00 15 1C 02 //same as bitaxe is using
+{0x00, 0x10, 0b00000000, 0b00000000, 0b00010101, 0b00011100}
+-> 6 bit high = 64
 
 
 
