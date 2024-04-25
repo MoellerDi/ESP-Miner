@@ -186,6 +186,9 @@ TEST_CASE("Testing single BM1366 chip against a known valid block", "[bm1366]")
         ESP_LOGI(TAG, "Waiting for result ... (might take a while)");
         asic_result = (*GLOBAL_STATE.ASIC_functions.receive_result_fn)(&GLOBAL_STATE);
 
+        uint32_t version = asic_result->rolled_version;
+        uint32_t nonce = 0;
+
         int counter = 1;
         while (asic_result != NULL && counter <= 60) {
 
@@ -196,6 +199,13 @@ TEST_CASE("Testing single BM1366 chip against a known valid block", "[bm1366]")
                 ESP_LOGI(TAG, "Expected nonce and version match. Solution found!");
                 break;
             }*/
+
+            if (asic_result->rolled_version < version || (asic_result->rolled_version == version && asic_result->nonce == nonce)) {
+                ESP_LOGI(TAG, "rollover detected - Nonce %lu, Version 0x%08lx", asic_result->nonce, asic_result->rolled_version);
+                break;
+            }
+            version = asic_result->rolled_version;
+            nonce = asic_result->nonce;
 
             asic_result = (*GLOBAL_STATE.ASIC_functions.receive_result_fn)(&GLOBAL_STATE); // wait for next result
             counter++;
