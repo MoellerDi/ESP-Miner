@@ -588,18 +588,14 @@ void BM1366_set_chip_address(uint8_t chipAddr)
     _set_chip_address(chipAddr);
 
 
-    //55 AA 41 09 00 A8 00 07 01 F0 15 //Reg_A8 unknown
-    //unsigned char data[9] = {0x00, 0xA8, 0b00000000, 0b00000111, 0b00000001, 0b11110000};
-    //_send_BM1366((TYPE_CMD | GROUP_ALL | CMD_WRITE), data, 6, false);
+    // bm1366: 8 cores, 112 asic_cores each = 896 small cores (what are the 2 additional (896 vs. 894) small cores for?)
 
-    //55 AA 41 09 00 18 F0 00 C1 00 0C //Misc Control
-    //unsigned char data1[9] = {0x00, 0x18, 0b11110000, 0b00000000, 0b11000001, 0b00000000};
-    //_send_BM1366((TYPE_CMD | GROUP_ALL | CMD_WRITE), data1, 6, false);
-
-    // 55 AA 51 09 00 10 00 00 11 5A 04 //s19kPro (77 chips) 0x115a = 4442
+    // 55 AA 51 09 00 10 00 00 11 5A 04 //s19kPro (77 chips) 0x115a = 4442 rev: 88(136)5a(90) = 34906 //2.402.859.228
     //unsigned char data[9] = {0x00, 0x10, 0b00000000, 0b00000000, 0b00010001, 0b01011010};
-    // 55 AA 51 09 00 10 00 00 14 46 04 //s19xp_luxos (110 chips) 0x1446 = 5190
+    // 55 AA 51 09 00 10 00 00 14 46 04 //s19xp_luxos (110 chips) 0x1446 = 5190 rev: 28(40)62(98) = 10338
     //unsigned char data[9] = {0x00, 0x10, 0b00000000, 0b00000000, 0b00010100, 0b01000110};
+    // 55 AA 51 09 00 10 00 00 15 1C 02 //s19xp-stock / bitaxe 0x151c = 5372 rev: a8(168)38(56) = 43064
+    //unsigned char data[9] = {0x00, 0x10, 0b00000000, 0b00000000, 0b00010101, 0b00011100};
 
     //unsigned char data[9] = {0x00, 0x10, 0b00000000, 0b11111111, 0b11111111, 0b11111111}; //slowest
     unsigned char data[9] = {0x00, 0x10, 0b00000000, 0b00001111, 0b11111111, 0b11111111}; // working
