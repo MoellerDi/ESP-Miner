@@ -1,3 +1,263 @@
+{0x00, 0x10, 0b00000000, 0b00000000, 0b00000000, 0b10000000};
+I (1694) test_bm1366: Changing chip address and sending job; new chip address: 0x00
+I (1704) test_bm1366: Waiting for result ... (might take a while)
+I (66164) test_bm1366: Result[1]: Nonce 4248567984 (0xfd3c00b0) Nonce difficulty 32.94021892476632729085395112633705. rolled-version 0x2e840000
+I (66294) test_bm1366: Result[2]: Nonce 4248567984 (0xfd3c00b0) Nonce difficulty 32.94021892476632729085395112633705. rolled-version 0x2e840000
+I (66424) test_bm1366: Result[3]: Nonce 4248567984 (0xfd3c00b0) Nonce difficulty 32.94021892476632729085395112633705. rolled-version 0x2e840000
+I (66554) test_bm1366: Result[4]: Nonce 4248567984 (0xfd3c00b0) Nonce difficulty 32.94021892476632729085395112633705. rolled-version 0x2e840000
+I (66684) test_bm1366: Result[5]: Nonce 4248567984 (0xfd3c00b0) Nonce difficulty 32.94021892476632729085395112633705. rolled-version 0x2e840000
+I (66804) test_bm1366: Result[6]: Nonce 4248567984 (0xfd3c00b0) Nonce difficulty 32.94021892476632729085395112633705. rolled-version 0x2e840000
+I (66934) test_bm1366: Result[7]: Nonce 4248567984 (0xfd3c00b0) Nonce difficulty 32.94021892476632729085395112633705. rolled-version 0x2e840000
+I (67064) test_bm1366: Result[8]: Nonce 4248567984 (0xfd3c00b0) Nonce difficulty 32.94021892476632729085395112633705. rolled-version 0x2e840000
+I (67194) test_bm1366: Result[9]: Nonce 4248567984 (0xfd3c00b0) Nonce difficulty 32.94021892476632729085395112633705. rolled-version 0x2e840000
+I (67314) test_bm1366: Result[10]: Nonce 4248567984 (0xfd3c00b0) Nonce difficulty 32.94021892476632729085395112633705. rolled-version 0x2e840000
+I (67444) test_bm1366: Changing chip address and sending job; new chip address: 0x01
+I (67444) test_bm1366: Waiting for result ... (might take a while)
+I (94304) test_bm1366: Result[1]: Nonce 997589724 (0x3b7602dc) Nonce difficulty 31.18313917513652100410581624601036. rolled-version 0x24148000
+I (94434) test_bm1366: Result[2]: Nonce 997589724 (0x3b7602dc) Nonce difficulty 31.18313917513652100410581624601036. rolled-version 0x24148000
+I (94554) test_bm1366: Result[3]: Nonce 997589724 (0x3b7602dc) Nonce difficulty 31.18313917513652100410581624601036. rolled-version 0x24148000
+I (94684) test_bm1366: Result[4]: Nonce 997589724 (0x3b7602dc) Nonce difficulty 31.18313917513652100410581624601036. rolled-version 0x24148000
+I (94814) test_bm1366: Result[5]: Nonce 997589724 (0x3b7602dc) Nonce difficulty 31.18313917513652100410581624601036. rolled-version 0x24148000
+I (94944) test_bm1366: Result[6]: Nonce 997589724 (0x3b7602dc) Nonce difficulty 31.18313917513652100410581624601036. rolled-version 0x24148000
+I (95064) test_bm1366: Result[7]: Nonce 997589724 (0x3b7602dc) Nonce difficulty 31.18313917513652100410581624601036. rolled-version 0x24148000
+I (95194) test_bm1366: Result[8]: Nonce 997589724 (0x3b7602dc) Nonce difficulty 31.18313917513652100410581624601036. rolled-version 0x24148000
+I (95324) test_bm1366: Result[9]: Nonce 997589724 (0x3b7602dc) Nonce difficulty 31.18313917513652100410581624601036. rolled-version 0x24148000
+I (95454) test_bm1366: Result[10]: Nonce 997589724 (0x3b7602dc) Nonce difficulty 31.18313917513652100410581624601036. rolled-version 0x24148000
+I (95584) test_bm1366: Changing chip address and sending job; new chip address: 0x02
+I (95584) test_bm1366: Waiting for result ... (might take a while)
+I (103094) test_bm1366: Result[1]: Nonce 3480093824 (0xcf6e0480) Nonce difficulty 66.24731787300319751921051647514105. rolled-version 0x38168000
+I (103214) test_bm1366: Result[2]: Nonce 3480093824 (0xcf6e0480) Nonce difficulty 66.24731787300319751921051647514105. rolled-version 0x38168000
+I (103344) test_bm1366: Result[3]: Nonce 3480093824 (0xcf6e0480) Nonce difficulty 66.24731787300319751921051647514105. rolled-version 0x38168000
+I (103474) test_bm1366: Result[4]: Nonce 3480093824 (0xcf6e0480) Nonce difficulty 66.24731787300319751921051647514105. rolled-version 0x38168000
+I (103604) test_bm1366: Result[5]: Nonce 3480093824 (0xcf6e0480) Nonce difficulty 66.24731787300319751921051647514105. rolled-version 0x38168000
+I (103734) test_bm1366: Result[6]: Nonce 3480093824 (0xcf6e0480) Nonce difficulty 66.24731787300319751921051647514105. rolled-version 0x38168000
+I (103854) test_bm1366: Result[7]: Nonce 3480093824 (0xcf6e0480) Nonce difficulty 66.24731787300319751921051647514105. rolled-version 0x38168000
+I (103984) test_bm1366: Result[8]: Nonce 3480093824 (0xcf6e0480) Nonce difficulty 66.24731787300319751921051647514105. rolled-version 0x38168000
+I (104114) test_bm1366: Result[9]: Nonce 3480093824 (0xcf6e0480) Nonce difficulty 66.24731787300319751921051647514105. rolled-version 0x38168000
+I (104244) test_bm1366: Result[10]: Nonce 3480093824 (0xcf6e0480) Nonce difficulty 66.24731787300319751921051647514105. rolled-version 0x38168000
+
+
+{0x00, 0x10, 0b00000000, 0b00000000, 0b10000000, 0b00000000};
+I (1664) test_bm1366: Changing chip address and sending job; new chip address: 0x00
+I (1674) test_bm1366: Waiting for result ... (might take a while)
+I (1864) test_bm1366: Result[1]: Nonce 2287338932 (0x885605b4) Nonce difficulty 64.43711914955444797215022845193744. rolled-version 0x2048e000
+I (1954) test_bm1366: Result[2]: Nonce 540019844 (0x20300c84) Nonce difficulty 21.52171467913845859243338054511696. rolled-version 0x206aa000
+I (2664) test_bm1366: Result[3]: Nonce 2531397000 (0x96e20d88) Nonce difficulty 30.02931492145342318167422490660101. rolled-version 0x21786000
+I (2704) test_bm1366: Result[4]: Nonce 3647866158 (0xd96e052e) Nonce difficulty 42.57350308183630005487430025823414. rolled-version 0x21884000
+I (2774) test_bm1366: Result[5]: Nonce 1458373492 (0x56ed0374) Nonce difficulty 65.96113219083832746036932803690434. rolled-version 0x21a4a000
+I (2874) test_bm1366: Result[6]: Nonce 1294996110 (0x4d30128e) Nonce difficulty 321.93918292484426046939915977418423. rolled-version 0x21c96000
+I (2934) test_bm1366: Result[7]: Nonce 2424571262 (0x9084057e) Nonce difficulty 165.78960580550696590762527193874121. rolled-version 0x21e02000
+I (3074) test_bm1366: Result[8]: Nonce 3667919144 (0xdaa00128) Nonce difficulty 240.34193038208377402042970061302185. rolled-version 0x22160000
+I (3364) test_bm1366: Result[9]: Nonce 2581401378 (0x99dd0f22) Nonce difficulty 168.84774335323203331427066586911678. rolled-version 0x2282a000
+I (3424) test_bm1366: Result[10]: Nonce 1498153662 (0x594c02be) Nonce difficulty 49.95192976491853187326341867446899. rolled-version 0x229d4000
+I (3544) test_bm1366: Changing chip address and sending job; new chip address: 0x01
+I (3544) test_bm1366: Waiting for result ... (might take a while)
+I (3734) test_bm1366: Result[1]: Nonce 2287338932 (0x885605b4) Nonce difficulty 64.43711914955444797215022845193744. rolled-version 0x2048e000
+I (3824) test_bm1366: Result[2]: Nonce 540019844 (0x20300c84) Nonce difficulty 21.52171467913845859243338054511696. rolled-version 0x206aa000
+I (4244) test_bm1366: Result[3]: Nonce 1018173310 (0x3cb0177e) Nonce difficulty 33.99998869608540275066843605600297. rolled-version 0x21070000
+I (4534) test_bm1366: Result[4]: Nonce 2531397000 (0x96e20d88) Nonce difficulty 30.02931492145342318167422490660101. rolled-version 0x21786000
+I (4574) test_bm1366: Result[5]: Nonce 3647866158 (0xd96e052e) Nonce difficulty 42.57350308183630005487430025823414. rolled-version 0x21884000
+I (4654) test_bm1366: Result[6]: Nonce 1458373492 (0x56ed0374) Nonce difficulty 65.96113219083832746036932803690434. rolled-version 0x21a4a000
+I (4754) test_bm1366: Result[7]: Nonce 1294996110 (0x4d30128e) Nonce difficulty 321.93918292484426046939915977418423. rolled-version 0x21c96000
+I (4804) test_bm1366: Result[8]: Nonce 2424571262 (0x9084057e) Nonce difficulty 165.78960580550696590762527193874121. rolled-version 0x21e02000
+I (5234) test_bm1366: Result[9]: Nonce 2581401378 (0x99dd0f22) Nonce difficulty 168.84774335323203331427066586911678. rolled-version 0x2282a000
+I (5304) test_bm1366: Result[10]: Nonce 1498153662 (0x594c02be) Nonce difficulty 49.95192976491853187326341867446899. rolled-version 0x229d4000
+I (5444) test_bm1366: Changing chip address and sending job; new chip address: 0x02
+I (5444) test_bm1366: Waiting for result ... (might take a while)
+I (5634) test_bm1366: Result[1]: Nonce 2287338932 (0x885605b4) Nonce difficulty 64.43711914955444797215022845193744. rolled-version 0x2048e000
+I (5724) test_bm1366: Result[2]: Nonce 540019844 (0x20300c84) Nonce difficulty 21.52171467913845859243338054511696. rolled-version 0x206aa000
+I (6114) test_bm1366: Result[3]: Nonce 2102007890 (0x7d4a1852) Nonce difficulty 20.43328102323422612585090973880142. rolled-version 0x20fd8000
+I (6134) test_bm1366: Result[4]: Nonce 1018173310 (0x3cb0177e) Nonce difficulty 33.99998869608540275066843605600297. rolled-version 0x21070000
+I (6434) test_bm1366: Result[5]: Nonce 2531397000 (0x96e20d88) Nonce difficulty 30.02931492145342318167422490660101. rolled-version 0x21786000
+I (6474) test_bm1366: Result[6]: Nonce 3647866158 (0xd96e052e) Nonce difficulty 42.57350308183630005487430025823414. rolled-version 0x21884000
+I (6644) test_bm1366: Result[7]: Nonce 1294996110 (0x4d30128e) Nonce difficulty 321.93918292484426046939915977418423. rolled-version 0x21c96000
+I (6704) test_bm1366: Result[8]: Nonce 2424571262 (0x9084057e) Nonce difficulty 165.78960580550696590762527193874121. rolled-version 0x21e02000
+I (7134) test_bm1366: Result[9]: Nonce 2581401378 (0x99dd0f22) Nonce difficulty 168.84774335323203331427066586911678. rolled-version 0x2282a000
+I (7344) test_bm1366: Result[10]: Nonce 4163375052 (0xf8280fcc) Nonce difficulty 52.83739491438561231007042806595564. rolled-version 0x22d12000
+I (7404) test_bm1366: Changing chip address and sending job; new chip address: 0x03
+I (7414) test_bm1366: Waiting for result ... (might take a while)
+I (7694) test_bm1366: Result[1]: Nonce 540019844 (0x20300c84) Nonce difficulty 21.52171467913845859243338054511696. rolled-version 0x206aa000
+I (8074) test_bm1366: Result[2]: Nonce 2102007890 (0x7d4a1852) Nonce difficulty 20.43328102323422612585090973880142. rolled-version 0x20fd8000
+I (8104) test_bm1366: Result[3]: Nonce 1018173310 (0x3cb0177e) Nonce difficulty 33.99998869608540275066843605600297. rolled-version 0x21070000
+I (8404) test_bm1366: Result[4]: Nonce 2531397000 (0x96e20d88) Nonce difficulty 30.02931492145342318167422490660101. rolled-version 0x21786000
+I (8614) test_bm1366: Result[5]: Nonce 1294996110 (0x4d30128e) Nonce difficulty 321.93918292484426046939915977418423. rolled-version 0x21c96000
+I (9094) test_bm1366: Result[6]: Nonce 2581401378 (0x99dd0f22) Nonce difficulty 168.84774335323203331427066586911678. rolled-version 0x2282a000
+I (9244) test_bm1366: Result[7]: Nonce 4067236766 (0xf26d1b9e) Nonce difficulty 77.92841335303882033258560113608837. rolled-version 0x22b96000
+I (9304) test_bm1366: Result[8]: Nonce 4163375052 (0xf8280fcc) Nonce difficulty 52.83739491438561231007042806595564. rolled-version 0x22d12000
+I (9374) test_bm1366: Result[9]: Nonce 571282772 (0x220d1554) Nonce difficulty 145.76442961087087724081357009708881. rolled-version 0x22eb6000
+I (9594) test_bm1366: Result[10]: Nonce 1428230790 (0x55211286) Nonce difficulty 18.47812097957995547403697855770588. rolled-version 0x233e6000
+I (9784) test_bm1366: Changing chip address and sending job; new chip address: 0x04
+I (9784) test_bm1366: Waiting for result ... (might take a while)
+I (9814) test_bm1366: Result[1]: Nonce 3356630138 (0xc8121c7a) Nonce difficulty 1026.29000767828665630077011883258820. rolled-version 0x2007c000
+I (10054) test_bm1366: Result[2]: Nonce 1323376048 (0x4ee11db0) Nonce difficulty 88.29458353921585000989580294117332. rolled-version 0x2065e000
+I (10064) test_bm1366: Result[3]: Nonce 540019844 (0x20300c84) Nonce difficulty 21.52171467913845859243338054511696. rolled-version 0x206aa000
+I (10454) test_bm1366: Result[4]: Nonce 2102007890 (0x7d4a1852) Nonce difficulty 20.43328102323422612585090973880142. rolled-version 0x20fd8000
+I (10484) test_bm1366: Result[5]: Nonce 1018173310 (0x3cb0177e) Nonce difficulty 33.99998869608540275066843605600297. rolled-version 0x21070000
+I (10534) test_bm1366: Result[6]: Nonce 3221298448 (0xc0011d10) Nonce difficulty 33.98607236948982546209663269110024. rolled-version 0x211a4000
+I (10774) test_bm1366: Result[7]: Nonce 2531397000 (0x96e20d88) Nonce difficulty 30.02931492145342318167422490660101. rolled-version 0x21786000
+I (10994) test_bm1366: Result[8]: Nonce 1294996110 (0x4d30128e) Nonce difficulty 321.93918292484426046939915977418423. rolled-version 0x21c96000
+I (11474) test_bm1366: Result[9]: Nonce 2581401378 (0x99dd0f22) Nonce difficulty 168.84774335323203331427066586911678. rolled-version 0x2282a000
+I (11624) test_bm1366: Result[10]: Nonce 4067236766 (0xf26d1b9e) Nonce difficulty 77.92841335303882033258560113608837. rolled-version 0x22b96000
+I (11684) test_bm1366: Changing chip address and sending job; new chip address: 0x05
+I (11684) test_bm1366: Waiting for result ... (might take a while)
+I (11704) test_bm1366: Result[1]: Nonce 3356630138 (0xc8121c7a) Nonce difficulty 1026.29000767828665630077011883258820. rolled-version 0x2007c000
+I (11954) test_bm1366: Result[2]: Nonce 1323376048 (0x4ee11db0) Nonce difficulty 88.29458353921585000989580294117332. rolled-version 0x2065e000
+I (11964) test_bm1366: Result[3]: Nonce 540019844 (0x20300c84) Nonce difficulty 21.52171467913845859243338054511696. rolled-version 0x206aa000
+I (12354) test_bm1366: Result[4]: Nonce 2102007890 (0x7d4a1852) Nonce difficulty 20.43328102323422612585090973880142. rolled-version 0x20fd8000
+I (12374) test_bm1366: Result[5]: Nonce 1018173310 (0x3cb0177e) Nonce difficulty 33.99998869608540275066843605600297. rolled-version 0x21070000
+I (12434) test_bm1366: Result[6]: Nonce 3221298448 (0xc0011d10) Nonce difficulty 33.98607236948982546209663269110024. rolled-version 0x211a4000
+I (12674) test_bm1366: Result[7]: Nonce 2531397000 (0x96e20d88) Nonce difficulty 30.02931492145342318167422490660101. rolled-version 0x21786000
+I (12884) test_bm1366: Result[8]: Nonce 1294996110 (0x4d30128e) Nonce difficulty 321.93918292484426046939915977418423. rolled-version 0x21c96000
+I (13374) test_bm1366: Result[9]: Nonce 2581401378 (0x99dd0f22) Nonce difficulty 168.84774335323203331427066586911678. rolled-version 0x2282a000
+I (13524) test_bm1366: Result[10]: Nonce 4067236766 (0xf26d1b9e) Nonce difficulty 77.92841335303882033258560113608837. rolled-version 0x22b96000
+I (13584) test_bm1366: Changing chip address and sending job; new chip address: 0x06
+I (13584) test_bm1366: Waiting for result ... (might take a while)
+I (13604) test_bm1366: Result[1]: Nonce 3356630138 (0xc8121c7a) Nonce difficulty 1026.29000767828665630077011883258820. rolled-version 0x2007c000
+I (13854) test_bm1366: Result[2]: Nonce 1323376048 (0x4ee11db0) Nonce difficulty 88.29458353921585000989580294117332. rolled-version 0x2065e000
+I (13864) test_bm1366: Result[3]: Nonce 540019844 (0x20300c84) Nonce difficulty 21.52171467913845859243338054511696. rolled-version 0x206aa000
+I (14254) test_bm1366: Result[4]: Nonce 2102007890 (0x7d4a1852) Nonce difficulty 20.43328102323422612585090973880142. rolled-version 0x20fd8000
+I (14274) test_bm1366: Result[5]: Nonce 1018173310 (0x3cb0177e) Nonce difficulty 33.99998869608540275066843605600297. rolled-version 0x21070000
+I (14324) test_bm1366: Result[6]: Nonce 3221298448 (0xc0011d10) Nonce difficulty 33.98607236948982546209663269110024. rolled-version 0x211a4000
+I (14574) test_bm1366: Result[7]: Nonce 2531397000 (0x96e20d88) Nonce difficulty 30.02931492145342318167422490660101. rolled-version 0x21786000
+I (14784) test_bm1366: Result[8]: Nonce 1294996110 (0x4d30128e) Nonce difficulty 321.93918292484426046939915977418423. rolled-version 0x21c96000
+I (15134) test_bm1366: Result[9]: Nonce 2448302418 (0x91ee2152) Nonce difficulty 51.14872378419807574800870497711003. rolled-version 0x224f0000
+I (15274) test_bm1366: Result[10]: Nonce 2581401378 (0x99dd0f22) Nonce difficulty 168.84774335323203331427066586911678. rolled-version 0x2282a000
+I (15414) test_bm1366: Changing chip address and sending job; new chip address: 0x07
+I (15414) test_bm1366: Waiting for result ... (might take a while)
+I (15434) test_bm1366: Result[1]: Nonce 3356630138 (0xc8121c7a) Nonce difficulty 1026.29000767828665630077011883258820. rolled-version 0x2007c000
+I (15644) test_bm1366: Result[2]: Nonce 3654755094 (0xd9d72316) Nonce difficulty 70.17640397332415602704713819548488. rolled-version 0x20564000
+I (15684) test_bm1366: Result[3]: Nonce 1323376048 (0x4ee11db0) Nonce difficulty 88.29458353921585000989580294117332. rolled-version 0x2065e000
+I (16084) test_bm1366: Result[4]: Nonce 2102007890 (0x7d4a1852) Nonce difficulty 20.43328102323422612585090973880142. rolled-version 0x20fd8000
+I (16114) test_bm1366: Result[5]: Nonce 1018173310 (0x3cb0177e) Nonce difficulty 33.99998869608540275066843605600297. rolled-version 0x21070000
+I (16164) test_bm1366: Result[6]: Nonce 3221298448 (0xc0011d10) Nonce difficulty 33.98607236948982546209663269110024. rolled-version 0x211a4000
+I (16614) test_bm1366: Result[7]: Nonce 1294996110 (0x4d30128e) Nonce difficulty 321.93918292484426046939915977418423. rolled-version 0x21c96000
+I (16974) test_bm1366: Result[8]: Nonce 2448302418 (0x91ee2152) Nonce difficulty 51.14872378419807574800870497711003. rolled-version 0x224f0000
+I (17084) test_bm1366: Result[9]: Nonce 1347691464 (0x505423c8) Nonce difficulty 61.18027307174658346866635838523507. rolled-version 0x22790000
+I (17104) test_bm1366: Result[10]: Nonce 2581401378 (0x99dd0f22) Nonce difficulty 168.84774335323203331427066586911678. rolled-version 0x2282a000
+
+
+{0x00, 0x10, 0b00000000, 0b00000000, 0b00000000, 0b00001010}
+I (1664) test_bm1366: Changing chip address and sending job; new chip address: 0x00
+I (1674) test_bm1366: Waiting for result ... (might take a while)
+I (6924) test_bm1366: Result[1]: Nonce 3667919144 (0xdaa00128) Nonce difficulty 240.34193038208377402042970061302185. rolled-version 0x22160000
+I (8534) test_bm1366: Result[2]: Nonce 3667919144 (0xdaa00128) Nonce difficulty 240.34193038208377402042970061302185. rolled-version 0x22160000
+I (10324) test_bm1366: Result[3]: Nonce 4248567984 (0xfd3c00b0) Nonce difficulty 32.94021892476632729085395112633705. rolled-version 0x2e840000
+I (11934) test_bm1366: Result[4]: Nonce 4248567984 (0xfd3c00b0) Nonce difficulty 32.94021892476632729085395112633705. rolled-version 0x2e840000
+I (12344) test_bm1366: Result[5]: Nonce 2720137664 (0xa22201c0) Nonce difficulty 21.98523354573708843417989555746317. rolled-version 0x30510000
+I (13964) test_bm1366: Result[6]: Nonce 2720137664 (0xa22201c0) Nonce difficulty 21.98523354573708843417989555746317. rolled-version 0x30510000
+I (19694) test_bm1366: Result[7]: Nonce 3667919144 (0xdaa00128) Nonce difficulty 240.34193038208377402042970061302185. rolled-version 0x22160000
+I (21304) test_bm1366: Result[8]: Nonce 3667919144 (0xdaa00128) Nonce difficulty 240.34193038208377402042970061302185. rolled-version 0x22160000
+I (23094) test_bm1366: Result[9]: Nonce 4248567984 (0xfd3c00b0) Nonce difficulty 32.94021892476632729085395112633705. rolled-version 0x2e840000
+I (24704) test_bm1366: Result[10]: Nonce 4248567984 (0xfd3c00b0) Nonce difficulty 32.94021892476632729085395112633705. rolled-version 0x2e840000
+I (25114) test_bm1366: Changing chip address and sending job; new chip address: 0x01
+I (25114) test_bm1366: Waiting for result ... (might take a while)
+I (34464) test_bm1366: Result[1]: Nonce 1252459344 (0x4aa70350) Nonce difficulty 39.67257836464168718748624087311327. rolled-version 0x2b1a0000
+I (47234) test_bm1366: Result[2]: Nonce 1252459344 (0x4aa70350) Nonce difficulty 39.67257836464168718748624087311327. rolled-version 0x2b1a0000
+I (60004) test_bm1366: Result[3]: Nonce 1252459344 (0x4aa70350) Nonce difficulty 39.67257836464168718748624087311327. rolled-version 0x2b1a0000
+I (72764) test_bm1366: Result[4]: Nonce 1252459344 (0x4aa70350) Nonce difficulty 39.67257836464168718748624087311327. rolled-version 0x2b1a0000
+I (85534) test_bm1366: Result[5]: Nonce 1252459344 (0x4aa70350) Nonce difficulty 39.67257836464168718748624087311327. rolled-version 0x2b1a0000
+I (98304) test_bm1366: Result[6]: Nonce 1252459344 (0x4aa70350) Nonce difficulty 39.67257836464168718748624087311327. rolled-version 0x2b1a0000
+I (111074) test_bm1366: Result[7]: Nonce 1252459344 (0x4aa70350) Nonce difficulty 39.67257836464168718748624087311327. rolled-version 0x2b1a0000
+I (123834) test_bm1366: Result[8]: Nonce 1252459344 (0x4aa70350) Nonce difficulty 39.67257836464168718748624087311327. rolled-version 0x2b1a0000
+I (136604) test_bm1366: Result[9]: Nonce 1252459344 (0x4aa70350) Nonce difficulty 39.67257836464168718748624087311327. rolled-version 0x2b1a0000
+I (149374) test_bm1366: Result[10]: Nonce 1252459344 (0x4aa70350) Nonce difficulty 39.67257836464168718748624087311327. rolled-version 0x2b1a0000
+
+{0x00, 0x10, 0b00000000, 0b00000000, 0b00000000, 0b00011100}
+I (1664) test_bm1366: Changing chip address and sending job; new chip address: 0x00
+I (1674) test_bm1366: Waiting for result ... (might take a while)
+I (3794) test_bm1366: Result[1]: Nonce 3667919144 (0xdaa00128) Nonce difficulty 240.34193038208377402042970061302185. rolled-version 0x22160000
+I (3884) test_bm1366: Result[2]: Nonce 2720137664 (0xa22201c0) Nonce difficulty 21.98523354573708843417989555746317. rolled-version 0x30510000
+I (5314) test_bm1366: Result[3]: Nonce 4248567984 (0xfd3c00b0) Nonce difficulty 32.94021892476632729085395112633705. rolled-version 0x2e840000
+I (7864) test_bm1366: Result[4]: Nonce 2720137664 (0xa22201c0) Nonce difficulty 21.98523354573708843417989555746317. rolled-version 0x30510000
+I (9294) test_bm1366: Result[5]: Nonce 4248567984 (0xfd3c00b0) Nonce difficulty 32.94021892476632729085395112633705. rolled-version 0x2e840000
+I (10204) test_bm1366: Result[6]: Nonce 3667919144 (0xdaa00128) Nonce difficulty 240.34193038208377402042970061302185. rolled-version 0x22160000
+I (14194) test_bm1366: Result[7]: Nonce 3667919144 (0xdaa00128) Nonce difficulty 240.34193038208377402042970061302185. rolled-version 0x22160000
+I (14284) test_bm1366: Result[8]: Nonce 2720137664 (0xa22201c0) Nonce difficulty 21.98523354573708843417989555746317. rolled-version 0x30510000
+I (15704) test_bm1366: Result[9]: Nonce 4248567984 (0xfd3c00b0) Nonce difficulty 32.94021892476632729085395112633705. rolled-version 0x2e840000
+I (18174) test_bm1366: Result[10]: Nonce 3667919144 (0xdaa00128) Nonce difficulty 240.34193038208377402042970061302185. rolled-version 0x22160000
+I (18264) test_bm1366: Changing chip address and sending job; new chip address: 0x01
+I (18264) test_bm1366: Waiting for result ... (might take a while)
+I (18284) test_bm1366: Result[1]: Nonce 1252459344 (0x4aa70350) Nonce difficulty 39.67257836464168718748624087311327. rolled-version 0x2b1a0000
+I (22274) test_bm1366: Result[2]: Nonce 1252459344 (0x4aa70350) Nonce difficulty 39.67257836464168718748624087311327. rolled-version 0x2b1a0000
+I (32674) test_bm1366: Result[3]: Nonce 1252459344 (0x4aa70350) Nonce difficulty 39.67257836464168718748624087311327. rolled-version 0x2b1a0000
+I (36654) test_bm1366: Result[4]: Nonce 1252459344 (0x4aa70350) Nonce difficulty 39.67257836464168718748624087311327. rolled-version 0x2b1a0000
+I (40644) test_bm1366: Result[5]: Nonce 1252459344 (0x4aa70350) Nonce difficulty 39.67257836464168718748624087311327. rolled-version 0x2b1a0000
+I (51034) test_bm1366: Result[6]: Nonce 1252459344 (0x4aa70350) Nonce difficulty 39.67257836464168718748624087311327. rolled-version 0x2b1a0000
+I (55024) test_bm1366: Result[7]: Nonce 1252459344 (0x4aa70350) Nonce difficulty 39.67257836464168718748624087311327. rolled-version 0x2b1a0000
+I (59004) test_bm1366: Result[8]: Nonce 1252459344 (0x4aa70350) Nonce difficulty 39.67257836464168718748624087311327. rolled-version 0x2b1a0000
+I (62994) test_bm1366: Result[9]: Nonce 1252459344 (0x4aa70350) Nonce difficulty 39.67257836464168718748624087311327. rolled-version 0x2b1a0000
+I (69404) test_bm1366: Result[10]: Nonce 1252459344 (0x4aa70350) Nonce difficulty 39.67257836464168718748624087311327. rolled-version 0x2b1a0000
+
+
+{0x00, 0x10, 0b00000000, 0b00000000, 0b1010100, 0b00111000};
+I (1714) test_bm1366: Changing chip address and sending job; new chip address: 0x00
+I (1724) test_bm1366: Waiting for result ... (might take a while)
+I (1844) test_bm1366: Result[1]: Nonce 2287338932 (0x885605b4) Nonce difficulty 64.43711914955444797215022845193744. rolled-version 0x2048e000
+I (1904) test_bm1366: Result[2]: Nonce 540019844 (0x20300c84) Nonce difficulty 21.52171467913845859243338054511696. rolled-version 0x206aa000
+I (2374) test_bm1366: Result[3]: Nonce 2531397000 (0x96e20d88) Nonce difficulty 30.02931492145342318167422490660101. rolled-version 0x21786000
+I (2404) test_bm1366: Result[4]: Nonce 3647866158 (0xd96e052e) Nonce difficulty 42.57350308183630005487430025823414. rolled-version 0x21884000
+I (2444) test_bm1366: Result[5]: Nonce 1458373492 (0x56ed0374) Nonce difficulty 65.96113219083832746036932803690434. rolled-version 0x21a4a000
+I (2554) test_bm1366: Result[6]: Nonce 2424571262 (0x9084057e) Nonce difficulty 165.78960580550696590762527193874121. rolled-version 0x21e02000
+I (2644) test_bm1366: Result[7]: Nonce 3667919144 (0xdaa00128) Nonce difficulty 240.34193038208377402042970061302185. rolled-version 0x22160000
+I (2884) test_bm1366: Result[8]: Nonce 1498153662 (0x594c02be) Nonce difficulty 49.95192976491853187326341867446899. rolled-version 0x229d4000
+I (2954) test_bm1366: Result[9]: Nonce 2935423336 (0xaef70168) Nonce difficulty 37.82404033468024806552421068772674. rolled-version 0x22c98000
+I (3274) test_bm1366: Result[10]: Nonce 1740636346 (0x67c000ba) Nonce difficulty 89.60391434750336259185132803395391. rolled-version 0x2382c000
+I (3314) test_bm1366: Changing chip address and sending job; new chip address: 0x01
+I (3314) test_bm1366: Waiting for result ... (might take a while)
+I (3444) test_bm1366: Result[1]: Nonce 2287338932 (0x885605b4) Nonce difficulty 64.43711914955444797215022845193744. rolled-version 0x2048e000
+I (3504) test_bm1366: Result[2]: Nonce 540019844 (0x20300c84) Nonce difficulty 21.52171467913845859243338054511696. rolled-version 0x206aa000
+I (3964) test_bm1366: Result[3]: Nonce 2531397000 (0x96e20d88) Nonce difficulty 30.02931492145342318167422490660101. rolled-version 0x21786000
+I (3994) test_bm1366: Result[4]: Nonce 3647866158 (0xd96e052e) Nonce difficulty 42.57350308183630005487430025823414. rolled-version 0x21884000
+I (4044) test_bm1366: Result[5]: Nonce 1458373492 (0x56ed0374) Nonce difficulty 65.96113219083832746036932803690434. rolled-version 0x21a4a000
+I (4144) test_bm1366: Result[6]: Nonce 2424571262 (0x9084057e) Nonce difficulty 165.78960580550696590762527193874121. rolled-version 0x21e02000
+I (4424) test_bm1366: Result[7]: Nonce 2581401378 (0x99dd0f22) Nonce difficulty 168.84774335323203331427066586911678. rolled-version 0x2282a000
+I (4474) test_bm1366: Result[8]: Nonce 1498153662 (0x594c02be) Nonce difficulty 49.95192976491853187326341867446899. rolled-version 0x229d4000
+I (4564) test_bm1366: Result[9]: Nonce 4163375052 (0xf8280fcc) Nonce difficulty 52.83739491438561231007042806595564. rolled-version 0x22d12000
+I (4884) test_bm1366: Result[10]: Nonce 2184908680 (0x823b0f88) Nonce difficulty 88.68557997089176581084757344797254. rolled-version 0x23886000
+I (4904) test_bm1366: Changing chip address and sending job; new chip address: 0x02
+I (4904) test_bm1366: Waiting for result ... (might take a while)
+I (5034) test_bm1366: Result[1]: Nonce 2287338932 (0x885605b4) Nonce difficulty 64.43711914955444797215022845193744. rolled-version 0x2048e000
+I (5094) test_bm1366: Result[2]: Nonce 540019844 (0x20300c84) Nonce difficulty 21.52171467913845859243338054511696. rolled-version 0x206aa000
+I (5564) test_bm1366: Result[3]: Nonce 2531397000 (0x96e20d88) Nonce difficulty 30.02931492145342318167422490660101. rolled-version 0x21786000
+I (5584) test_bm1366: Result[4]: Nonce 3647866158 (0xd96e052e) Nonce difficulty 42.57350308183630005487430025823414. rolled-version 0x21884000
+I (5704) test_bm1366: Result[5]: Nonce 1294996110 (0x4d30128e) Nonce difficulty 321.93918292484426046939915977418423. rolled-version 0x21c96000
+I (5744) test_bm1366: Result[6]: Nonce 2424571262 (0x9084057e) Nonce difficulty 165.78960580550696590762527193874121. rolled-version 0x21e02000
+I (6024) test_bm1366: Result[7]: Nonce 2581401378 (0x99dd0f22) Nonce difficulty 168.84774335323203331427066586911678. rolled-version 0x2282a000
+I (6154) test_bm1366: Result[8]: Nonce 4163375052 (0xf8280fcc) Nonce difficulty 52.83739491438561231007042806595564. rolled-version 0x22d12000
+I (6344) test_bm1366: Result[9]: Nonce 1428230790 (0x55211286) Nonce difficulty 18.47812097957995547403697855770588. rolled-version 0x233e6000
+I (6474) test_bm1366: Result[10]: Nonce 2184908680 (0x823b0f88) Nonce difficulty 88.68557997089176581084757344797254. rolled-version 0x23886000
+I (6504) test_bm1366: Changing chip address and sending job; new chip address: 0x03
+I (6504) test_bm1366: Waiting for result ... (might take a while)
+I (6684) test_bm1366: Result[1]: Nonce 540019844 (0x20300c84) Nonce difficulty 21.52171467913845859243338054511696. rolled-version 0x206aa000
+I (7154) test_bm1366: Result[2]: Nonce 2531397000 (0x96e20d88) Nonce difficulty 30.02931492145342318167422490660101. rolled-version 0x21786000
+I (7264) test_bm1366: Result[3]: Nonce 4094694436 (0xf4101424) Nonce difficulty 27.73534359227456036478542955592275. rolled-version 0x21b76000
+I (7294) test_bm1366: Result[4]: Nonce 1294996110 (0x4d30128e) Nonce difficulty 321.93918292484426046939915977418423. rolled-version 0x21c96000
+I (7614) test_bm1366: Result[5]: Nonce 2581401378 (0x99dd0f22) Nonce difficulty 168.84774335323203331427066586911678. rolled-version 0x2282a000
+I (7754) test_bm1366: Result[6]: Nonce 4163375052 (0xf8280fcc) Nonce difficulty 52.83739491438561231007042806595564. rolled-version 0x22d12000
+I (7944) test_bm1366: Result[7]: Nonce 1428230790 (0x55211286) Nonce difficulty 18.47812097957995547403697855770588. rolled-version 0x233e6000
+I (8074) test_bm1366: Result[8]: Nonce 2184908680 (0x823b0f88) Nonce difficulty 88.68557997089176581084757344797254. rolled-version 0x23886000
+I (8294) test_bm1366: Result[9]: Nonce 3144421922 (0xbb6c1222) Nonce difficulty 74.64296257990653771230427082628012. rolled-version 0x240ba000
+I (8484) test_bm1366: Result[10]: Nonce 3368553504 (0xc8c80c20) Nonce difficulty 68.02647388421490859400364570319653. rolled-version 0x24760000
+I (8544) test_bm1366: Changing chip address and sending job; new chip address: 0x04
+I (8544) test_bm1366: Waiting for result ... (might take a while)
+I (8724) test_bm1366: Result[1]: Nonce 540019844 (0x20300c84) Nonce difficulty 21.52171467913845859243338054511696. rolled-version 0x206aa000
+I (9194) test_bm1366: Result[2]: Nonce 2531397000 (0x96e20d88) Nonce difficulty 30.02931492145342318167422490660101. rolled-version 0x21786000
+I (9304) test_bm1366: Result[3]: Nonce 4094694436 (0xf4101424) Nonce difficulty 27.73534359227456036478542955592275. rolled-version 0x21b76000
+I (9334) test_bm1366: Result[4]: Nonce 1294996110 (0x4d30128e) Nonce difficulty 321.93918292484426046939915977418423. rolled-version 0x21c96000
+I (9654) test_bm1366: Result[5]: Nonce 2581401378 (0x99dd0f22) Nonce difficulty 168.84774335323203331427066586911678. rolled-version 0x2282a000
+I (9794) test_bm1366: Result[6]: Nonce 4163375052 (0xf8280fcc) Nonce difficulty 52.83739491438561231007042806595564. rolled-version 0x22d12000
+I (9834) test_bm1366: Result[7]: Nonce 571282772 (0x220d1554) Nonce difficulty 145.76442961087087724081357009708881. rolled-version 0x22eb6000
+I (9984) test_bm1366: Result[8]: Nonce 1428230790 (0x55211286) Nonce difficulty 18.47812097957995547403697855770588. rolled-version 0x233e6000
+I (10114) test_bm1366: Result[9]: Nonce 2184908680 (0x823b0f88) Nonce difficulty 88.68557997089176581084757344797254. rolled-version 0x23886000
+I (10334) test_bm1366: Result[10]: Nonce 3144421922 (0xbb6c1222) Nonce difficulty 74.64296257990653771230427082628012. rolled-version 0x240ba000
+
+
+
+
+
+
+
+
 
 S19k-Pro (77 chips):
 55 AA 51 09 00 10 00 00 11 5A 04
@@ -22,6 +282,16 @@ S19xp-luxos (110 chips):
 2^25 = 33.554.432
 (2^32)/(2^7)-(2^25) = 0
 2^32 / 2^7 - 2^(32-7) = 0 
+
+
+{0x00, 0x10, 0b00000000, 0b00001000, 0b00000000, 0b00000000} seems like it's kind of counter, this will cause every possible chip adress to hash full 32bit nonce range.
+
+
+
+
+
+
+
 
 
 S19xp-org (110 chips):
