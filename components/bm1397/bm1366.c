@@ -598,9 +598,49 @@ void BM1366_set_chip_address(uint8_t chipAddr)
     //unsigned char data[9] = {0x00, 0x10, 0b00000000, 0b00000000, 0b00010101, 0b00011100};
 
     //unsigned char data[9] = {0x00, 0x10, 0b00000000, 0b11111111, 0b11111111, 0b11111111}; //slowest
-    unsigned char data[9] = {0x00, 0x10, 0b00000000, 0b00001111, 0b11111111, 0b11111111}; // working
-    //unsigned char data[9] = {0x00, 0x10, 0b00000000, 0b00000000, 0b00000000, 0b00000011}; // testing
-    _send_BM1366((TYPE_CMD | GROUP_ALL | CMD_WRITE), data, 6, false);
+    //unsigned char data[9] = {0x00, 0x10, 0b00000000, 0b00001111, 0b11111111, 0b11111111}; // working
+    //unsigned char data[9] = {0x00, 0x10, 0b00000000, 0b00001111, 0b11111111, 0b11110000}; // working2
+    //unsigned char data[9] = {0x00, 0x10, 0b00000000, 0b00001111, 0b00000000, 0b00000000}; // working3 -> F00000 = 15728640 // (2^32)-(15728640*256)
+    //unsigned char data[9] = {0x00, 0x10, 0b00000000, 0b00000001, 0b00000000, 0b00000000}; // testing
+    //_send_BM1366((TYPE_CMD | GROUP_ALL | CMD_WRITE), data, 6, false);
+
+    //2^32/254 = 16777216 (0x1000000)
+    //2^32/128 = 33554432 (0x2000000)
+    //(2^32)/256/8 = 2097152
+
+    //BM1366_set_chip_mask( (8*112*256) );
+    //BM1366_set_chip_mask( 0xf00000 ); //15728640
+    //BM1366_set_chip_mask( 0x780000 ); //7864320
+    //BM1366_set_chip_mask( (0x0000ffff) );
+    BM1366_set_chip_mask( (8*112) );
+}
+
+void BM1366_set_chip_mask(uint32_t chipmask)
+{
+    // Default mask of 256
+    unsigned char command[9] = {0x00, 0x10, 0b00000000, 0b00000000, 0b00000000, 0b11111111};
+
+    // The mask must be a power of 2 so there are no holes
+    // Correct:  {0b00000000, 0b00000000, 0b11111111, 0b11111111}
+    // Incorrect: {0b00000000, 0b00000000, 0b11100111, 0b11111111}
+    // (difficulty - 1) if it is a pow 2 then step down to second largest for more hashrate sampling
+    //chipmask = _largest_power_of_two(chipmask) - 1;
+
+    // convert difficulty into char array
+    // Ex: 256 = {0b00000000, 0b00000000, 0b00000000, 0b11111111}, {0x00, 0x00, 0x00, 0xff}
+    // Ex: 512 = {0b00000000, 0b00000000, 0b00000001, 0b11111111}, {0x00, 0x00, 0x01, 0xff}
+    for (int i = 0; i < 4; i++) {
+        char value = (chipmask >> (8 * i)) & 0xFF;
+        // The char is read in backwards to the register so we need to reverse them
+        // So a mask of 512 looks like 0b00000000 00000000 00000001 1111111
+        // and not 0b00000000 00000000 10000000 1111111
+
+        command[5 - i] = value; //_reverse_bits(value);
+    }
+
+    ESP_LOGI(TAG, "Setting chip ASIC mask to %lu (0x%08lx)", chipmask, chipmask);
+
+    _send_BM1366((TYPE_CMD | GROUP_ALL | CMD_WRITE), command, 6, true);
 }
 
 // Baud formula = 25M/((denominator+1)*8)
