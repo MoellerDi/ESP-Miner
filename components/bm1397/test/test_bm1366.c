@@ -136,7 +136,7 @@ TEST_CASE("Testing single BM1366 chip against a known valid block", "[bm1366]")
     notify_message.version = 0x20000000; // from mining.notify to test version rolling
     notify_message.target = 0x17034219;
     notify_message.ntime = 0x66221BDF; // actual time of resolved block, see blockchain.info/...
-    notify_message.difficulty = 4; // can be as high as 652198270
+    notify_message.difficulty = 512; // can be as high as 652198270
     const uint32_t expected_nonce = 3529540887;
     const uint32_t expected_version = 0x2a966000;
     
@@ -175,9 +175,10 @@ TEST_CASE("Testing single BM1366 chip against a known valid block", "[bm1366]")
     // In order to show and proof the different nonce scapes per chip address, we start at 96 (96 * 2 = 192 = 0xc0).
     // It is expected to not find a solution in nonce space of chip address 0xc0.
     // This unit test is designed to test one single BM1366 chip.
-    for (uint16_t i = 0; i < (128/4); i++) {
+    int chip_num = 4;
+    for (uint16_t i = 0; i < (256); i = i + (256/chip_num)) {
 
-        uint8_t chip_address = i; // * 2;
+        uint8_t chip_address = i;
         
         ESP_LOGI(TAG, "Changing chip address and sending job; new chip address: 0x%02x (%d)", chip_address, chip_address);
         BM1366_set_chip_address(chip_address);
@@ -185,12 +186,13 @@ TEST_CASE("Testing single BM1366 chip against a known valid block", "[bm1366]")
 
         ESP_LOGI(TAG, "Waiting for result ... (might take a while)");
         asic_result = (*GLOBAL_STATE.ASIC_functions.receive_result_fn)(&GLOBAL_STATE);
+        if (asic_result == NULL) { continue; }
 
         uint32_t version = asic_result->rolled_version;
         uint32_t nonce = 0;
 
         int counter = 1;
-        while (asic_result != NULL && counter <= 20) {
+        while (asic_result != NULL && counter <= 100) {
 
             if (asic_result->rolled_version < version || (asic_result->rolled_version == version && asic_result->nonce == nonce)) {
                 ESP_LOGI(TAG, "Rollover detected - Nonce %lu, Version 0x%08lx", asic_result->nonce, asic_result->rolled_version);

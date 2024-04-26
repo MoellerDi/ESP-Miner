@@ -590,11 +590,11 @@ void BM1366_set_chip_address(uint8_t chipAddr)
 
     // bm1366: 8 cores, 112 asic_cores each = 896 small cores (what are the 2 additional (896 vs. 894) small cores for?)
 
-    // 55 AA 51 09 00 10 00 00 11 5A 04 //s19kPro (77 chips) 0x115a = 4442 rev: 88(136)5a(90) = 34906 //2.402.859.228
+    // 55 AA 51 09 00 10 00 00 11 5A 04 //s19kPro (77 chips) 0x115a = 4442 rev: 88(136)5a(90) = 34906 //le:23176
     //unsigned char data[9] = {0x00, 0x10, 0b00000000, 0b00000000, 0b00010001, 0b01011010};
-    // 55 AA 51 09 00 10 00 00 14 46 04 //s19xp_luxos (110 chips) 0x1446 = 5190 rev: 28(40)62(98) = 10338
+    // 55 AA 51 09 00 10 00 00 14 46 04 //s19xp_luxos (110 chips) 0x1446 = 5190 rev: 28(40)62(98) = 10338 //le:25128
     //unsigned char data[9] = {0x00, 0x10, 0b00000000, 0b00000000, 0b00010100, 0b01000110};
-    // 55 AA 51 09 00 10 00 00 15 1C 02 //s19xp-stock / bitaxe 0x151c = 5372 rev: a8(168)38(56) = 43064
+    // 55 AA 51 09 00 10 00 00 15 1C 02 //s19xp-stock / bitaxe 0x151c = 5404 rev: a8(168)38(56) = 43064 //le:14504
     //unsigned char data[9] = {0x00, 0x10, 0b00000000, 0b00000000, 0b00010101, 0b00011100};
 
     //unsigned char data[9] = {0x00, 0x10, 0b00000000, 0b11111111, 0b11111111, 0b11111111}; //slowest
@@ -604,15 +604,48 @@ void BM1366_set_chip_address(uint8_t chipAddr)
     //unsigned char data[9] = {0x00, 0x10, 0b00000000, 0b00000001, 0b00000000, 0b00000000}; // testing
     //_send_BM1366((TYPE_CMD | GROUP_ALL | CMD_WRITE), data, 6, false);
 
+    //unsigned char data[9] = {0x00, 0x10, 0b00000000, 0b00000111, 0b11111111, 0b11111111};
+    //_send_BM1366((TYPE_CMD | GROUP_ALL | CMD_WRITE), data, 6, false);
+
     //2^32/254 = 16777216 (0x1000000)
     //2^32/128 = 33554432 (0x2000000)
     //(2^32)/256/8 = 2097152
 
-    //BM1366_set_chip_mask( (8*112*256) );
+    //BM1366_set_chip_mask( (8*112*255) );
     //BM1366_set_chip_mask( 0xf00000 ); //15728640
     //BM1366_set_chip_mask( 0x780000 ); //7864320
     //BM1366_set_chip_mask( (0x0000ffff) );
-    BM1366_set_chip_mask( (8*112) );
+    //BM1366_set_chip_mask( (0x151c) * 128 ); // (5404*128)/896 = 691712/896 = 772
+
+    //(5404*128)/8 = 86464
+    //BM1366_set_chip_mask( (((0x151c * 128)/8) *8 ) / 2);
+    //full range 691712 ??
+    uint32_t magic_number = 0x151c * 128;
+    //BM1366_set_chip_mask( (0x151c) *64); //= 345856 // zwei Bereiche, 0-128 und 128-256, intervall 2
+
+    int chip_num = 4;
+    BM1366_set_chip_mask( magic_number / chip_num);
+
+    /*
+    int core_small_core_num = 8;
+    int asic_core_num = 112;
+    int asic_small_core_num = 894;
+    
+
+    int chip_cores = 8;
+    int asic_cores = 112;
+    int magic_number = 772;
+    */
+    //BM1366_set_chip_mask( (chip_cores * asic_cores * magic_number) / chip_num );
+    //BM1366_set_chip_mask( (asic_small_core_num * magic_number) / chip_num );
+
+
+    //BM1366_set_chip_mask( (0xa838)*128 );
+
+
+    //enable and set version rolling mask to 0xFFFF (again)
+    //unsigned char init795[11] = {0x55, 0xAA, 0x51, 0x09, 0x00, 0xA4, 0x90, 0x00, 0xFF, 0xFF, 0x1C};
+    //_send_simple(init795, 11);
 }
 
 void BM1366_set_chip_mask(uint32_t chipmask)
@@ -737,7 +770,7 @@ void BM1366_send_work(void * pvParameters, bm_job * next_bm_job)
 asic_result * BM1366_receive_work(void)
 {
     // wait for a response, wait time is pretty arbitrary
-    int received = SERIAL_rx(asic_response_buffer, 11, 300000);
+    int received = SERIAL_rx(asic_response_buffer, 11, 60000);
 
     if (received < 0) {
         ESP_LOGI(TAG, "Error in serial RX");
