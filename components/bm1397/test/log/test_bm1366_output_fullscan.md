@@ -283,13 +283,57 @@ S19xp-luxos (110 chips):
 (2^32)/(2^7)-(2^25) = 0
 2^32 / 2^7 - 2^(32-7) = 0 
 
+((2^32/2)/64) = 33.554.432 // even/uneven scope 00-7f even, 80-ff uneven, 64 areas each
+2^(32-7) = 33.554.432 // 7 bits of core_address
+
 
 {0x00, 0x10, 0b00000000, 0b00001000, 0b00000000, 0b00000000} seems like it's kind of counter, this will cause every possible chip adress to hash full 32bit nonce range.
 
+//unsigned char command2[6] = {0x00, 0x10, 0b00000000, 0b00011111, 0b11111111, 0b11111111}; //5bits = 230 in 1332,62 sec
+//unsigned char command2[6] = {0x00, 0x10, 0b00000000, 0b00001111, 0b11111111, 0b11111111}; //4bit = 236 in 644,83 sec //max?
 
+    "asic": {
+        "asic_id": "BM1368",
+        "asic_addr": "0x1368",
+        "asic_core_num": 80,
+        "asic_small_core_num": 1276,
+        "core_small_core_num": 16,
+        "asic_domain_num": 1,
+        "asic_addr_interval": 2
+    }
+    "asic": {
+        "asic_id": "BM1366",
+        "asic_addr": "0x1366",
+        "asic_core_num": 112,
+        "asic_small_core_num": 894,
+        "core_small_core_num": 8,
+        "asic_domain_num": 1,
+        "asic_addr_interval": 1
+    },
 
+uint8_t chipAddr = (asic_result->nonce >> 9) & 0x7f;
+uint8_t coreAddr = (asic_result->nonce >> 29) & 0x7f;
 
+{0x00, 0x10, 0b00000000, 0b00000000, 0b000001 11, 0b11111111}; increment of 1 aka follows chip address
+{0x00, 0x10, 0b00000000, 0b00000000, 0b000011 11, 0b11111111}; increment of 2
+{0x00, 0x10, 0b00000000, 0b00000000, 0b000111 11, 0b11111111}; increment of 3
+{0x00, 0x10, 0b00000000, 0b00000000, 0b001010 11, 0b11111111}; increment of 4
+{0x00, 0x10, 0b00000000, 0b00000000, 0b010111 11, 0b11111111}; increment of 8
+{0x00, 0x10, 0b00000000, 0b00000000, 0b101111 11, 0b11111111}; increment of 16
+{0x00, 0x10, 0b00000000, 0b00000001, 0b011011 11, 0b11111111}; increment of 32
 
+                    zzz00yyy yyyy000x xxxxxx00 00000000
+x = chip address 7-1 bits (0-127) (1st bit is always 0 due to increment of 2)
+y = core address 7 bits (0-127)
+z = small core   3 bits (0-7)
+
+nonce = 0x15e1fd91 = 00010101 11100001 11111101 10010001
+chip addr = 0xfe   =                   1111110
+offset =             00000000 00000000 00001111 11111111
+
+nonce = 0x25aafe3b = 00100101 10101010 11111110 00111011
+chip addr = 0xfe   =                   1111110
+offset =             00000000 00000000 00001111 11111111
 
 
 
