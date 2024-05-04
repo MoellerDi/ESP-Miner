@@ -15,13 +15,22 @@ void ASIC_result_task(void *pvParameters)
 
     char *user = nvs_config_get_string(NVS_CONFIG_STRATUM_USER, STRATUM_USER);
 
+    uint32_t first_nonce = 0;
+    uint32_t first_job_id = 0;
+
     while (1)
     {
-
         task_result *asic_result = (*GLOBAL_STATE->ASIC_functions.receive_result_fn)(GLOBAL_STATE);
 
-        if (asic_result == NULL)
+        if (asic_result == NULL) // check if we got serial timeout or new job is already requested
         {
+            pthread_mutex_lock(&GLOBAL_STATE->asic_needs_new_job_lock);
+            GLOBAL_STATE->asic_needs_new_job = true;
+            pthread_mutex_unlock(&GLOBAL_STATE->asic_needs_new_job_lock);
+            continue;
+        }
+
+        if (GLOBAL_STATE->asic_needs_new_job == true) { // check if new job is already requested (rollover detected)
             continue;
         }
 
@@ -30,6 +39,21 @@ void ASIC_result_task(void *pvParameters)
         if (GLOBAL_STATE->valid_jobs[job_id] == 0)
         {
             ESP_LOGI(TAG, "Invalid job nonce found, id=%d", job_id);
+            continue;
+        }
+
+        if (job_id != first_job_id) // check if this is the first result of the job, if so we use it for rollover detection
+        {
+            first_job_id = job_id;
+            first_nonce = asic_result->nonce;
+
+        } else if (asic_result->nonce == first_nonce) // rollover is detected whenever we see the first result again 
+        {
+            pthread_mutex_lock(&GLOBAL_STATE->asic_needs_new_job_lock);
+            GLOBAL_STATE->asic_needs_new_job = true; // set flag to signal asic_task to push a new job
+            pthread_mutex_unlock(&GLOBAL_STATE->asic_needs_new_job_lock);
+
+            ESP_LOGI(TAG, "Job ID: %02x, Rollover detected - Nonce %08lx, Rolled_version 0x%08lx - request new job", asic_result->job_id, asic_result->nonce, asic_result->rolled_version);
             continue;
         }
 

@@ -144,6 +144,10 @@ void stratum_task(void * pvParameters)
                         GLOBAL_STATE->valid_jobs[i] = 0;
                     }
                     pthread_mutex_unlock(&GLOBAL_STATE->valid_jobs_lock);
+                    
+                    pthread_mutex_lock(&GLOBAL_STATE->asic_needs_new_job_lock);
+                    GLOBAL_STATE->asic_needs_new_job = true; // set flag to signal asic_task to push a new job
+                    pthread_mutex_unlock(&GLOBAL_STATE->asic_needs_new_job_lock);
                 }
                 if (GLOBAL_STATE->stratum_queue.count == QUEUE_SIZE) {
                     mining_notify * next_notify_json_str = (mining_notify *) queue_dequeue(&GLOBAL_STATE->stratum_queue);

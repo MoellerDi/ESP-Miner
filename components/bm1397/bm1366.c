@@ -703,7 +703,7 @@ int BM1366_set_max_baud(void)
 
 void BM1366_set_job_difficulty_mask(int difficulty)
 {
-    if (difficulty < 16) {
+    if (difficulty > 256) {
         return;
     }
 
@@ -760,9 +760,9 @@ void BM1366_send_work(void * pvParameters, bm_job * next_bm_job)
     pthread_mutex_lock(&GLOBAL_STATE->valid_jobs_lock);
     GLOBAL_STATE->valid_jobs[job.job_id] = 1;
     
-    // uint8_t job_id = job.job_id;
-    // uint8_t tx_job_id = job_id & 0xf8;
-    // ESP_LOGI(TAG, "TX Job ID: %02X", tx_job_id);
+    uint8_t job_id = job.job_id;
+    uint8_t tx_job_id = job_id & 0xf8;
+    ESP_LOGI(TAG, "TX Job ID: %02X", tx_job_id);
 
     pthread_mutex_unlock(&GLOBAL_STATE->valid_jobs_lock);
 
