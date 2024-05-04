@@ -36,7 +36,7 @@ void app_main(void)
                                         .set_max_baud_fn = BM1366_set_max_baud,
                                         .set_difficulty_mask_fn = BM1366_set_job_difficulty_mask,
                                         .send_work_fn = BM1366_send_work};
-        GLOBAL_STATE.asic_job_frequency_ms = BM1366_FULLSCAN_MS;
+        GLOBAL_STATE.asic_job_frequency_ms = 0; // 0 = dynamic job scheduling enabled
 
         GLOBAL_STATE.ASIC_functions = ASIC_functions;
     } else if (strcmp(GLOBAL_STATE.asic_model, "BM1368") == 0) {

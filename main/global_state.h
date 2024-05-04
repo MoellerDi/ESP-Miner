@@ -44,6 +44,9 @@ typedef struct
     uint8_t * valid_jobs;
     pthread_mutex_t valid_jobs_lock;
 
+    bool asic_needs_new_job;
+    pthread_mutex_t asic_needs_new_job_lock;
+
     uint32_t stratum_difficulty;
     uint32_t version_mask;
 

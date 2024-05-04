@@ -47,6 +47,18 @@ void ASIC_task(void *pvParameters)
 
         // Time to execute the above code is ~0.3ms
         // vTaskDelay((BM1397_FULLSCAN_MS - 0.3 ) / portTICK_PERIOD_MS);
-        vTaskDelay((GLOBAL_STATE->asic_job_frequency_ms - 0.3) / portTICK_PERIOD_MS);
+        if (GLOBAL_STATE->asic_job_frequency_ms > 0)
+        {
+            vTaskDelay((GLOBAL_STATE->asic_job_frequency_ms - 0.3) / portTICK_PERIOD_MS);
+        } else {
+            // use nonce rollover detection in asic_result_task to signal whenever a new job is needed
+            pthread_mutex_lock(&GLOBAL_STATE->asic_needs_new_job_lock);
+            GLOBAL_STATE->asic_needs_new_job = false; // clear flag
+            pthread_mutex_unlock(&GLOBAL_STATE->asic_needs_new_job_lock);
+            while (GLOBAL_STATE->asic_needs_new_job == false)
+            {
+                vTaskDelay(100 / portTICK_PERIOD_MS); // wait for asic_result_task to signal new job is needed
+            }
+        }
     }
 }
