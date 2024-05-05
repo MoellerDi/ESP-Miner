@@ -14,6 +14,7 @@ export interface ISystemInfo {
     bestSessionDiff: string,
     freeHeap: number,
     coreVoltage: number,
+    hostname: string,
     ssid: string,
     wifiStatus: string,
     sharesAccepted: number,
