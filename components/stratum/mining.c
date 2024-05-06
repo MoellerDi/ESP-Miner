@@ -120,6 +120,7 @@ char *extranonce_2_generate(uint32_t extranonce_2, uint32_t length)
     {
         extranonce_2_str[8] = '0';
     }
+    extranonce_2_str[length * 2] = '\0';
     return extranonce_2_str;
 }
 

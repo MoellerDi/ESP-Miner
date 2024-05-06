@@ -104,3 +104,15 @@ TEST_CASE("Parse stratum notify params", "[mining.notify]")
 //     TEST_ASSERT_EQUAL_STRING(extranonce, "e9695791");
 //     TEST_ASSERT_EQUAL_INT(extranonce2_len, 4);
 // }
+
+TEST_CASE("Parse stratum mining.set_extranonce (xnsub extension) params", "[stratum]")
+{
+    // XNSUB-Extension - https://github.com/nicehash/Specifications/blob/master/NiceHash_extranonce_subscribe_extension.txt
+    StratumApiV1Message stratum_api_v1_message = {};
+    const char *json_string = "{\"id\":null, \"method\": \"mining.set_extranonce\", \"params\": [\"08000002\", 4]}";
+    STRATUM_V1_parse(&stratum_api_v1_message, json_string);
+    //TEST_ASSERT_EQUAL(0, stratum_api_v1_message.message_id);
+    TEST_ASSERT_EQUAL(MINING_SET_EXTRANONCE, stratum_api_v1_message.method);
+    TEST_ASSERT_EQUAL_STRING("08000002", stratum_api_v1_message.extranonce_str);
+    TEST_ASSERT_EQUAL(4, stratum_api_v1_message.extranonce_2_len);
+}

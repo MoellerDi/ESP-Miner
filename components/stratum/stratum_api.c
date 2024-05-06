@@ -118,6 +118,8 @@ void STRATUM_V1_parse(StratumApiV1Message * message, const char * stratum_json)
             result = MINING_SET_DIFFICULTY;
         } else if (strcmp("mining.set_version_mask", method_json->valuestring) == 0) {
             result = MINING_SET_VERSION_MASK;
+        } else if (strcmp("mining.set_extranonce", method_json->valuestring) == 0) {
+            result = MINING_SET_EXTRANONCE;
         }
     } else {
         // parse results
@@ -174,19 +176,40 @@ void STRATUM_V1_parse(StratumApiV1Message * message, const char * stratum_json)
         int paramsLength = cJSON_GetArraySize(params);
         int value = cJSON_IsTrue(cJSON_GetArrayItem(params, paramsLength - 1));
         message->should_abandon_work = value;
+
     } else if (message->method == MINING_SET_DIFFICULTY) {
         cJSON * params = cJSON_GetObjectItem(json, "params");
         uint32_t difficulty = cJSON_GetArrayItem(params, 0)->valueint;
-
         message->new_difficulty = difficulty;
-    } else if (message->method == MINING_SET_VERSION_MASK) {
 
+    } else if (message->method == MINING_SET_VERSION_MASK) {
         cJSON * params = cJSON_GetObjectItem(json, "params");
         uint32_t version_mask = strtoul(cJSON_GetArrayItem(params, 0)->valuestring, NULL, 16);
         message->version_mask = version_mask;
+
+    } else if (message->method == MINING_SET_EXTRANONCE) {
+        // https://github.com/nicehash/Specifications/blob/master/NiceHash_extranonce_subscribe_extension.txt
+        cJSON * params = cJSON_GetObjectItem(json, "params");
+        cJSON * extranonce_json = cJSON_GetArrayItem(params, 0);
+        message->extranonce_str = realloc(message->extranonce_str, strlen(extranonce_json->valuestring) + 1);
+        if (message->extranonce_str != NULL) {
+            strcpy(message->extranonce_str, extranonce_json->valuestring);
+        }
+        message->extranonce_2_len = cJSON_GetArrayItem(params, 1)->valueint;
     }
 
     cJSON_Delete(json);
+}
+
+int STRATUM_V1_extranonce_subscribe(int socket)
+{
+    // Extranonce Subscribe - https://github.com/nicehash/Specifications/blob/master/NiceHash_extranonce_subscribe_extension.txt
+    char subscribe_msg[BUFFER_SIZE];
+    sprintf(subscribe_msg, "{\"id\": %d, \"method\": \"mining.extranonce.subscribe\", \"params\": []}\n", send_uid++);
+    debug_stratum_tx(subscribe_msg);
+    write(socket, subscribe_msg, strlen(subscribe_msg));
+
+    return 1;
 }
 
 void STRATUM_V1_free_mining_notify(mining_notify * params)

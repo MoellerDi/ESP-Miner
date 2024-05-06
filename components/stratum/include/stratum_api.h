@@ -16,6 +16,7 @@ typedef enum
     MINING_NOTIFY,
     MINING_SET_DIFFICULTY,
     MINING_SET_VERSION_MASK,
+    MINING_SET_EXTRANONCE,
     STRATUM_RESULT,
     STRATUM_RESULT_VERSION_MASK
 } stratum_method;
@@ -49,6 +50,9 @@ typedef struct
     uint32_t new_difficulty;
     // mining.set_version_mask
     uint32_t version_mask;
+    // mining.set_extranonce
+    char * extranonce_str;
+    int extranonce_2_len;
     // result
     bool response_success;
 } StratumApiV1Message;
@@ -58,6 +62,8 @@ void STRATUM_V1_initialize_buffer();
 char *STRATUM_V1_receive_jsonrpc_line(int sockfd);
 
 int STRATUM_V1_subscribe(int socket, char ** extranonce, int * extranonce2_len, char * model);
+
+int STRATUM_V1_extranonce_subscribe(int socket);
 
 void STRATUM_V1_parse(StratumApiV1Message *message, const char *stratum_json);
 

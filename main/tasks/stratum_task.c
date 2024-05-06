@@ -103,10 +103,11 @@ void stratum_task(void * pvParameters)
         STRATUM_V1_subscribe(GLOBAL_STATE->sock, &GLOBAL_STATE->extranonce_str, &GLOBAL_STATE->extranonce_2_len,
                              GLOBAL_STATE->asic_model);
 
+        // mining.extranonce.subscribe
+        STRATUM_V1_extranonce_subscribe(GLOBAL_STATE->sock);
 
         // mining.configure
         STRATUM_V1_configure_version_rolling(GLOBAL_STATE->sock, &GLOBAL_STATE->version_mask);
-
 
         // This should come before the final step of authenticate so the first job is sent with the proper difficulty set
         //mining.suggest_difficulty
@@ -162,6 +163,14 @@ void stratum_task(void * pvParameters)
                 // 1fffe000
                 ESP_LOGI(TAG, "Set version mask: %08lx", stratum_api_v1_message.version_mask);
                 GLOBAL_STATE->version_mask = stratum_api_v1_message.version_mask;
+            } else if (stratum_api_v1_message.method == MINING_SET_EXTRANONCE) {
+                pthread_mutex_lock(&GLOBAL_STATE->extranonce_lock);
+                GLOBAL_STATE->extranonce_2_len = stratum_api_v1_message.extranonce_2_len;
+                GLOBAL_STATE->extranonce_str = realloc(GLOBAL_STATE->extranonce_str, strlen(stratum_api_v1_message.extranonce_str) + 1);
+                if (GLOBAL_STATE->extranonce_str != NULL) {
+                    strcpy(GLOBAL_STATE->extranonce_str, stratum_api_v1_message.extranonce_str);
+                }
+                pthread_mutex_unlock(&GLOBAL_STATE->extranonce_lock);
             } else if (stratum_api_v1_message.method == STRATUM_RESULT) {
                 if (stratum_api_v1_message.response_success) {
                     ESP_LOGI(TAG, "message result accepted");

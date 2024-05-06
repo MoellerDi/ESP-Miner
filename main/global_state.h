@@ -39,6 +39,7 @@ typedef struct
 
     char * extranonce_str;
     int extranonce_2_len;
+    pthread_mutex_t extranonce_lock;
     int abandon_work;
 
     uint8_t * valid_jobs;

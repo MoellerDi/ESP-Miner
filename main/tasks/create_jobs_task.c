@@ -23,9 +23,10 @@ void create_jobs_task(void *pvParameters)
         uint32_t extranonce_2 = 0;
         while (GLOBAL_STATE->stratum_queue.count < 1 && extranonce_2 < UINT_MAX && GLOBAL_STATE->abandon_work == 0)
         {
+            pthread_mutex_lock(&GLOBAL_STATE->extranonce_lock);
             char *extranonce_2_str = extranonce_2_generate(extranonce_2, GLOBAL_STATE->extranonce_2_len);
-
             char *coinbase_tx = construct_coinbase_tx(mining_notification->coinbase_1, mining_notification->coinbase_2, GLOBAL_STATE->extranonce_str, extranonce_2_str);
+            pthread_mutex_unlock(&GLOBAL_STATE->extranonce_lock);
 
             char *merkle_root = calculate_merkle_root_hash(coinbase_tx, (uint8_t(*)[32])mining_notification->merkle_branches, mining_notification->n_merkle_branches);
             bm_job next_job = construct_bm_job(mining_notification, merkle_root, GLOBAL_STATE->version_mask);
