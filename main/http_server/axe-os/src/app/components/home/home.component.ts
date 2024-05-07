@@ -163,7 +163,7 @@ export class HomeComponent {
     this.sharesRejectedPct$ = this.info$.pipe(
       map(info => {
         if (info.sharesAccepted > 0 && info.sharesRejected > 0) {
-          return (100 / info.sharesAccepted) * info.sharesRejected
+          return (100 / (info.sharesAccepted + info.sharesRejected)) * info.sharesRejected
         } else {
           return 0.001
         }
