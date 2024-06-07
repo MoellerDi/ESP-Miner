@@ -62,7 +62,7 @@ void POWER_MANAGEMENT_task(void * pvParameters)
         .mode = GPIO_MODE_INPUT,
     };
     gpio_config(&barrel_jack_conf);
-    int barrel_jack_plugged_in = gpio_get_level(GPIO_NUM_12);
+    int barrel_jack_plugged_in = 1; //gpio_get_level(GPIO_NUM_12);
 
     gpio_set_direction(GPIO_NUM_10, GPIO_MODE_OUTPUT);
     if (barrel_jack_plugged_in == 1 || !power_management->HAS_PLUG_SENSE) {
@@ -178,7 +178,7 @@ void POWER_MANAGEMENT_task(void * pvParameters)
             int gpio12_state = gpio_get_level(GPIO_NUM_12);
             if (gpio12_state == 0) {
                 // turn ASIC off
-                gpio_set_level(GPIO_NUM_10, 1);
+                //gpio_set_level(GPIO_NUM_10, 1);
             }
         }
 
