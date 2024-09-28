@@ -77,8 +77,8 @@ void POWER_MANAGEMENT_task(void * pvParameters)
 
     power_management->frequency_multiplier = 1;
 
-    power_management->HAS_POWER_EN = GLOBAL_STATE->board_version == 202 || GLOBAL_STATE->board_version == 203 || GLOBAL_STATE->board_version == 204;
-    power_management->HAS_PLUG_SENSE = GLOBAL_STATE->board_version == 204;
+    //power_management->HAS_POWER_EN = GLOBAL_STATE->board_version == 202 || GLOBAL_STATE->board_version == 203 || GLOBAL_STATE->board_version == 204;
+    //power_management->HAS_PLUG_SENSE = GLOBAL_STATE->board_version == 204;
 
     int last_frequency_increase = 0;
 

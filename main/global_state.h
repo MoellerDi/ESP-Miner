@@ -15,7 +15,7 @@
 
 #define STRATUM_USER CONFIG_STRATUM_USER
 
-#define HISTORY_LENGTH 100
+#define HISTORY_LENGTH 10
 #define DIFF_STRING_SIZE 10
 
 typedef enum
